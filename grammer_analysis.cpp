@@ -19,7 +19,7 @@ void compiler::goesback_two_steps() {
 	index = now_point;
 }
 
-// £¼³ÌĞò£¾ ::= £Û£¼³£Á¿ËµÃ÷£¾£İ£Û£¼±äÁ¿ËµÃ÷£¾£İ{£¼ÓĞ·µ»ØÖµº¯Êı¶¨Òå£¾|£¼ÎŞ·µ»ØÖµº¯Êı¶¨Òå£¾}
+// ï¼œç¨‹åºï¼ ::= ï¼»ï¼œå¸¸é‡è¯´æ˜ï¼ï¼½ï¼»ï¼œå˜é‡è¯´æ˜ï¼ï¼½{ï¼œæœ‰è¿”å›å€¼å‡½æ•°å®šä¹‰ï¼|ï¼œæ— è¿”å›å€¼å‡½æ•°å®šä¹‰ï¼}
 void compiler::program() {
 	getsym();
 	if (sym == "CONSTTK") {
@@ -69,7 +69,7 @@ void compiler::program() {
 				getsym();
 			}
 			if (sym == "LPARENT") {
-				//out << "<ÉùÃ÷Í·²¿>\n";
+				//out << "<å£°æ˜å¤´éƒ¨>\n";
 				//out << "LPARENT (\n";
 				have_return_func.push_back(word);
 				getsym();
@@ -100,8 +100,8 @@ void compiler::program() {
 	main_func();
 	pop_sym_list();
 	push_midcode(EXIT_OP, "", "", "");
-	//out << "<Ö÷º¯Êı>\n";
-	//out << "<³ÌĞò>\n";
+	//out << "<ä¸»å‡½æ•°>\n";
+	//out << "<ç¨‹åº>\n";
 }
 
 /*in.seekg(now_point, ios::beg);
@@ -114,7 +114,7 @@ void compiler::program() {
 		if (sym == )
 	}*/
 
-// £¼±äÁ¿ËµÃ÷£¾ ::= £¼±äÁ¿¶¨Òå£¾;{£¼±äÁ¿¶¨Òå£¾;}
+// ï¼œå˜é‡è¯´æ˜ï¼ ::= ï¼œå˜é‡å®šä¹‰ï¼;{ï¼œå˜é‡å®šä¹‰ï¼;}
 void compiler::var_discription() {
 
 	while (sym == "INTTK" || sym == "CHARTK") {
@@ -133,10 +133,10 @@ void compiler::var_discription() {
 			break;
 		}
 	}
-	//out << "<±äÁ¿ËµÃ÷>\n";
+	//out << "<å˜é‡è¯´æ˜>\n";
 }
 
-// £¼±äÁ¿¶¨Òå£¾ ::= £¼±äÁ¿¶¨ÒåÎŞ³õÊ¼»¯£¾|£¼±äÁ¿¶¨Òå¼°³õÊ¼»¯£¾
+// ï¼œå˜é‡å®šä¹‰ï¼ ::= ï¼œå˜é‡å®šä¹‰æ— åˆå§‹åŒ–ï¼|ï¼œå˜é‡å®šä¹‰åŠåˆå§‹åŒ–ï¼
 void compiler::var_defination() {
 	temp_line = line;
 	now_point = index;
@@ -145,7 +145,7 @@ void compiler::var_defination() {
 	while (sym != "SEMICN" && last_word_line == line) {		// int a \n int b = 2;
 		if (sym == "ASSIGN") {
 			whether_have_equal = true;
-			goesback_two_steps();	//Êµ¼ÊÉÏÕâÀïÊÇgoesback_one_step
+			goesback_two_steps();	//å®é™…ä¸Šè¿™é‡Œæ˜¯goesback_one_step
 			line = temp_line;
 			var_def_init();
 			//break;
@@ -155,11 +155,11 @@ void compiler::var_defination() {
 		}
 	}
 	if (!whether_have_equal) {
-		goesback_two_steps();	//Êµ¼ÊÉÏÕâÀïÊÇgoesback_one_step
+		goesback_two_steps();	//å®é™…ä¸Šè¿™é‡Œæ˜¯goesback_one_step
 		line = temp_line;
 		var_def_non_init();
 	}
-	//out << "<±äÁ¿¶¨Òå>\n";
+	//out << "<å˜é‡å®šä¹‰>\n";
 	if (sym == "SEMICN") {
 		//out << "SEMICN ;\n";
 		getsym();
@@ -169,8 +169,8 @@ void compiler::var_defination() {
 	}
 }
 
-// £¼±äÁ¿¶¨Òå¼°³õÊ¼»¯£¾ ::= £¼ÀàĞÍ±êÊ¶·û£¾£¼±êÊ¶·û£¾=£¼³£Á¿£¾|£¼ÀàĞÍ±êÊ¶·û£¾£¼±êÊ¶·û£¾'['£¼ÎŞ·ûºÅÕûÊı£¾']'='{'£¼³£Á¿£¾{,£¼³£Á¿£¾}'}'|
-// £¼ÀàĞÍ±êÊ¶·û£¾£¼±êÊ¶·û£¾'['£¼ÎŞ·ûºÅÕûÊı£¾']''['£¼ÎŞ·ûºÅÕûÊı£¾']'='{''{'£¼³£Á¿£¾{,£¼³£Á¿£¾}'}'{, '{'£¼³£Á¿£¾{,£¼³£Á¿£¾}'}'}'}'
+// ï¼œå˜é‡å®šä¹‰åŠåˆå§‹åŒ–ï¼ ::= ï¼œç±»å‹æ ‡è¯†ç¬¦ï¼ï¼œæ ‡è¯†ç¬¦ï¼=ï¼œå¸¸é‡ï¼|ï¼œç±»å‹æ ‡è¯†ç¬¦ï¼ï¼œæ ‡è¯†ç¬¦ï¼'['ï¼œæ— ç¬¦å·æ•´æ•°ï¼']'='{'ï¼œå¸¸é‡ï¼{,ï¼œå¸¸é‡ï¼}'}'|
+// ï¼œç±»å‹æ ‡è¯†ç¬¦ï¼ï¼œæ ‡è¯†ç¬¦ï¼'['ï¼œæ— ç¬¦å·æ•´æ•°ï¼']''['ï¼œæ— ç¬¦å·æ•´æ•°ï¼']'='{''{'ï¼œå¸¸é‡ï¼{,ï¼œå¸¸é‡ï¼}'}'{, '{'ï¼œå¸¸é‡ï¼{,ï¼œå¸¸é‡ï¼}'}'}'}'
 void compiler::var_def_init() {
 	class_type item_class_type = VAR;
 	return_type item_return_type = NOTHING;
@@ -228,8 +228,8 @@ void compiler::var_def_init() {
 				}
 				getsym();
 			}
-			//out << "<ÎŞ·ûºÅÕûÊı>\n";
-			//out << "<ÕûÊı>\n";
+			//out << "<æ— ç¬¦å·æ•´æ•°>\n";
+			//out << "<æ•´æ•°>\n";
 			temp_return_type = INT;
 		}
 		//
@@ -276,7 +276,7 @@ void compiler::var_def_init() {
 				getsym();
 
 				push_sym_list(name, item_class_type, item_return_type, 0, line, hang_expected, true);
-				symbol_list[symbol_num - 1]->array_length_lie = hang_expected;	///////////////////////////////////////////////////////////////////Êı×é³õÊ¼»¯µÄ´¦Àí
+				symbol_list[symbol_num - 1]->array_length_lie = hang_expected;	///////////////////////////////////////////////////////////////////æ•°ç»„åˆå§‹åŒ–çš„å¤„ç†
 
 				if (sym == "LBRACE") {
 					//out << "LBRACE {\n";
@@ -314,11 +314,11 @@ void compiler::var_def_init() {
 							}
 							getsym();
 						}
-						//out << "<ÎŞ·ûºÅÕûÊı>\n";
-						//out << "<ÕûÊı>\n";
+						//out << "<æ— ç¬¦å·æ•´æ•°>\n";
+						//out << "<æ•´æ•°>\n";
 						temp_return_type = INT;
 					}
-					//out << "<³£Á¿>\n";
+					//out << "<å¸¸é‡>\n";
 
 					symbol_list[symbol_num - 1]->array1[lie_point] = value;
 					//symbol_list[symbol_num - 1]->array1_first_use[lie_point] = false;
@@ -362,11 +362,11 @@ void compiler::var_def_init() {
 								}
 								getsym();
 							}
-							//out << "<ÎŞ·ûºÅÕûÊı>\n";
-							//out << "<ÕûÊı>\n";
+							//out << "<æ— ç¬¦å·æ•´æ•°>\n";
+							//out << "<æ•´æ•°>\n";
 							temp_return_type = INT;
 						}
-						//out << "<³£Á¿>\n";
+						//out << "<å¸¸é‡>\n";
 						symbol_list[symbol_num - 1]->array1[lie_point] = value;
 						//symbol_list[symbol_num - 1]->array1_first_use[lie_point] = false;
 						push_midcode(LEFT_ARRAY_OP, to_string(value), to_string(lie_point), name);
@@ -389,7 +389,7 @@ void compiler::var_def_init() {
 				}
 				else {
 					error_collect(ARRAY_INIT_NUM_ERROR, line);
-					getsym(); //////////////////////////////////////////////////////////////////////ÉÙÎ¬ÊıµÄÎ¨Ò»´í·¨£¿
+					getsym(); //////////////////////////////////////////////////////////////////////å°‘ç»´æ•°çš„å”¯ä¸€é”™æ³•ï¼Ÿ
 				}
 			}
 
@@ -460,11 +460,11 @@ void compiler::var_def_init() {
 										}
 										getsym();
 									}
-									//out << "<ÎŞ·ûºÅÕûÊı>\n";
-									//out << "<ÕûÊı>\n";
+									//out << "<æ— ç¬¦å·æ•´æ•°>\n";
+									//out << "<æ•´æ•°>\n";
 									temp_return_type = INT;
 								}
-								//out << "<³£Á¿>\n";
+								//out << "<å¸¸é‡>\n";
 
 								symbol_list[symbol_num - 1]->array2[hang_volume - 1][lie_volume] = value;
 								//symbol_list[symbol_num - 1]->array2_first_use[hang_volume - 1][lie_volume] = false;
@@ -516,11 +516,11 @@ void compiler::var_def_init() {
 											}
 											getsym();
 										}
-										//out << "<ÎŞ·ûºÅÕûÊı>\n";
-										//out << "<ÕûÊı>\n";
+										//out << "<æ— ç¬¦å·æ•´æ•°>\n";
+										//out << "<æ•´æ•°>\n";
 										temp_return_type = INT;
 									}
-									//out << "<³£Á¿>\n";
+									//out << "<å¸¸é‡>\n";
 
 									symbol_list[symbol_num - 1]->array2[hang_volume - 1][lie_volume] = value;
 									//symbol_list[symbol_num - 1]->array2_first_use[hang_volume - 1][lie_volume] = false;
@@ -582,11 +582,11 @@ void compiler::var_def_init() {
 													}
 													getsym();
 												}
-												//out << "<ÎŞ·ûºÅÕûÊı>\n";
-												//out << "<ÕûÊı>\n";
+												//out << "<æ— ç¬¦å·æ•´æ•°>\n";
+												//out << "<æ•´æ•°>\n";
 												temp_return_type = INT;
 											}
-											//out << "<³£Á¿>\n";
+											//out << "<å¸¸é‡>\n";
 
 											symbol_list[symbol_num - 1]->array2[hang_volume - 1][lie_volume] = value;
 											//symbol_list[symbol_num - 1]->array2_first_use[hang_volume - 1][lie_volume] = false;
@@ -633,11 +633,11 @@ void compiler::var_def_init() {
 														}
 														getsym();
 													}
-													//out << "<ÎŞ·ûºÅÕûÊı>\n";
-													//out << "<ÕûÊı>\n";
+													//out << "<æ— ç¬¦å·æ•´æ•°>\n";
+													//out << "<æ•´æ•°>\n";
 													temp_return_type = INT;
 												}
-												//out << "<³£Á¿>\n";
+												//out << "<å¸¸é‡>\n";
 
 												symbol_list[symbol_num - 1]->array2[hang_volume - 1][lie_volume] = value;
 												//symbol_list[symbol_num - 1]->array2_first_use[hang_volume - 1][lie_volume] = false;
@@ -663,7 +663,7 @@ void compiler::var_def_init() {
 										}
 									}
 									if (hang_expected != hang_volume){
-										error_collect(ARRAY_INIT_NUM_ERROR, line);			////////////////////////////////////ºóÃæ²»½Ógetsym()
+										error_collect(ARRAY_INIT_NUM_ERROR, line);			////////////////////////////////////åé¢ä¸æ¥getsym()
 									}
 									if (sym == "RBRACE") {
 										//out << "RBRACE }\n";
@@ -674,13 +674,13 @@ void compiler::var_def_init() {
 							else {
 								error_collect(ARRAY_INIT_NUM_ERROR, line);
 								for (int i = 0; i <= lie_expected; i++) {
-									getsym();							/////////////////////////¶Áµô ¡°2}¡± , ÍÆµ½ÏÂÒ»¸ögetsym
+									getsym();							/////////////////////////è¯»æ‰ â€œ2}â€ , æ¨åˆ°ä¸‹ä¸€ä¸ªgetsym
 								}
 							}
 						}
 						else {
 							error_collect(ARRAY_INIT_NUM_ERROR, line);
-							getsym();								////////////////////////¶Áµôµ¥Ò»µÄÊı×Ö
+							getsym();								////////////////////////è¯»æ‰å•ä¸€çš„æ•°å­—
 						}
 					}
 				}
@@ -695,11 +695,11 @@ void compiler::var_def_init() {
 			goto var_def_init1;
 		}
 	}
-	//out << "<±äÁ¿¶¨Òå¼°³õÊ¼»¯>\n";
+	//out << "<å˜é‡å®šä¹‰åŠåˆå§‹åŒ–>\n";
 }
 
-//£¼±äÁ¿¶¨ÒåÎŞ³õÊ¼»¯£¾  ::= £¼ÀàĞÍ±êÊ¶·û£¾(£¼±êÊ¶·û£¾|£¼±êÊ¶·û£¾'['£¼ÎŞ·ûºÅÕûÊı£¾']'|£¼±êÊ¶·û£¾'['£¼ÎŞ·ûºÅÕûÊı£¾']''['£¼ÎŞ·ûºÅÕûÊı£¾']')
-//{,(£¼±êÊ¶·û£¾|£¼±êÊ¶·û£¾'['£¼ÎŞ·ûºÅÕûÊı£¾']'|£¼±êÊ¶·û£¾'['£¼ÎŞ·ûºÅÕûÊı£¾']''['£¼ÎŞ·ûºÅÕûÊı£¾']' )}
+//ï¼œå˜é‡å®šä¹‰æ— åˆå§‹åŒ–ï¼  ::= ï¼œç±»å‹æ ‡è¯†ç¬¦ï¼(ï¼œæ ‡è¯†ç¬¦ï¼|ï¼œæ ‡è¯†ç¬¦ï¼'['ï¼œæ— ç¬¦å·æ•´æ•°ï¼']'|ï¼œæ ‡è¯†ç¬¦ï¼'['ï¼œæ— ç¬¦å·æ•´æ•°ï¼']''['ï¼œæ— ç¬¦å·æ•´æ•°ï¼']')
+//{,(ï¼œæ ‡è¯†ç¬¦ï¼|ï¼œæ ‡è¯†ç¬¦ï¼'['ï¼œæ— ç¬¦å·æ•´æ•°ï¼']'|ï¼œæ ‡è¯†ç¬¦ï¼'['ï¼œæ— ç¬¦å·æ•´æ•°ï¼']''['ï¼œæ— ç¬¦å·æ•´æ•°ï¼']' )}
 void compiler::var_def_non_init() {
 	class_type item_class_type = VAR;
 	return_type item_return_type = NOTHING;
@@ -738,7 +738,7 @@ void compiler::var_def_non_init() {
 		int array_index_1 = 0;
 		int array_index_2 = 0;
 
-		//ÏÂ±ê
+		//ä¸‹æ ‡
 		if (sym == "INTCON") {
 			//out << "INTCON " << word << "\n";
 			array_index_1 = stoi(word);
@@ -757,7 +757,7 @@ void compiler::var_def_non_init() {
 				//out << "LBRACK [\n";
 				getsym();
 
-				//ÏÂ±ê
+				//ä¸‹æ ‡
 				if (sym == "INTCON") {
 					//out << "INTCON " << word << "\n";
 					array_index_2 = stoi(word);
@@ -825,7 +825,7 @@ void compiler::var_def_non_init() {
 			}
 			getsym();
 
-			//ÏÂ±ê
+			//ä¸‹æ ‡
 			if (sym == "INTCON") {
 				//out << "INTCON " << word << "\n";
 				array_index_1 = stoi(word);
@@ -844,7 +844,7 @@ void compiler::var_def_non_init() {
 					//out << "LBRACK [\n";
 					getsym();
 					
-					//ÏÂ±ê
+					//ä¸‹æ ‡
 					if (sym == "INTCON") {
 						//out << "INTCON " << word << "\n";
 						array_index_2 = stoi(word);
@@ -886,10 +886,10 @@ void compiler::var_def_non_init() {
 			}
 		}
 	}
-	//out << "<±äÁ¿¶¨ÒåÎŞ³õÊ¼»¯>\n";
+	//out << "<å˜é‡å®šä¹‰æ— åˆå§‹åŒ–>\n";
 }
 
-// £¼Ö÷º¯Êı£¾ ::= void main¡®(¡¯¡®)¡¯ ¡®{¡¯£¼¸´ºÏÓï¾ä£¾¡®}¡¯
+// ï¼œä¸»å‡½æ•°ï¼ ::= void mainâ€˜(â€™â€˜)â€™ â€˜{â€™ï¼œå¤åˆè¯­å¥ï¼â€˜}â€™
 void compiler::main_func() {
 	enter_func();
 	if (sym == "MAINTK") {
@@ -923,7 +923,7 @@ void compiler::main_func() {
 	}
 }
 
-// £¼³£Á¿ËµÃ÷£¾ ::=  const£¼³£Á¿¶¨Òå£¾;{ const£¼³£Á¿¶¨Òå£¾;} 
+// ï¼œå¸¸é‡è¯´æ˜ï¼ ::=  constï¼œå¸¸é‡å®šä¹‰ï¼;{ constï¼œå¸¸é‡å®šä¹‰ï¼;} 
 void compiler::const_discription() {
 	do {
 		getsym();
@@ -941,10 +941,10 @@ void compiler::const_discription() {
 			goto const_discription1;
 		}
 	} while (sym == "CONSTTK");
-	//out << "<³£Á¿ËµÃ÷>\n";
+	//out << "<å¸¸é‡è¯´æ˜>\n";
 }
 
-// £¼³£Á¿¶¨Òå£¾ ::= int£¼±êÊ¶·û£¾£½£¼ÕûÊı£¾{,£¼±êÊ¶·û£¾£½£¼ÕûÊı£¾}  | char£¼±êÊ¶·û£¾£½£¼×Ö·û£¾{ ,£¼±êÊ¶·û£¾£½£¼×Ö·û£¾ }
+// ï¼œå¸¸é‡å®šä¹‰ï¼ ::= intï¼œæ ‡è¯†ç¬¦ï¼ï¼ï¼œæ•´æ•°ï¼{,ï¼œæ ‡è¯†ç¬¦ï¼ï¼ï¼œæ•´æ•°ï¼}  | charï¼œæ ‡è¯†ç¬¦ï¼ï¼ï¼œå­—ç¬¦ï¼{ ,ï¼œæ ‡è¯†ç¬¦ï¼ï¼ï¼œå­—ç¬¦ï¼ }
 void compiler::const_defination() {
 	class_type item_class_type = CONST;
 	if (sym == "INTTK") {
@@ -991,7 +991,7 @@ void compiler::const_defination() {
 					change_value(name, value);
 					//push_midcode(ADD_OP, to_string(value), "0", name);
 					getsym();
-					//out << "<ÎŞ·ûºÅÕûÊı>\n";
+					//out << "<æ— ç¬¦å·æ•´æ•°>\n";
 				}
 
 			}
@@ -1034,10 +1034,10 @@ void compiler::const_defination() {
 			}
 		} while (sym == "COMMA");
 	}
-	//out << "<³£Á¿¶¨Òå>\n";
+	//out << "<å¸¸é‡å®šä¹‰>\n";
 }
 
-// £¼ÕûÊı£¾ ::= £Û£«£ü£­£İ£¼ÎŞ·ûºÅÕûÊı£¾
+// ï¼œæ•´æ•°ï¼ ::= ï¼»ï¼‹ï½œï¼ï¼½ï¼œæ— ç¬¦å·æ•´æ•°ï¼
 void compiler::integer(int* value) {
 	bool neg = false;
 	if (sym == "PLUS") {
@@ -1060,11 +1060,11 @@ void compiler::integer(int* value) {
 		getsym();
 	}
 
-	//out << "<ÎŞ·ûºÅÕûÊı>\n";
-	//out << "<ÕûÊı>\n";
+	//out << "<æ— ç¬¦å·æ•´æ•°>\n";
+	//out << "<æ•´æ•°>\n";
 }
 
-// £¼ÎŞ·µ»ØÖµº¯Êı¶¨Òå£¾ ::= void£¼±êÊ¶·û£¾'('£¼²ÎÊı±í£¾')''{'£¼¸´ºÏÓï¾ä£¾'}'
+// ï¼œæ— è¿”å›å€¼å‡½æ•°å®šä¹‰ï¼ ::= voidï¼œæ ‡è¯†ç¬¦ï¼'('ï¼œå‚æ•°è¡¨ï¼')''{'ï¼œå¤åˆè¯­å¥ï¼'}'
 void compiler::non_return() {
 
 	bool whether_add_func = false;
@@ -1143,10 +1143,10 @@ void compiler::non_return() {
 			pop_sym_list();
 		}
 	}
-	//out << "<ÎŞ·µ»ØÖµº¯Êı¶¨Òå>\n";
+	//out << "<æ— è¿”å›å€¼å‡½æ•°å®šä¹‰>\n";
 }
 
-// £¼ÓĞ·µ»ØÖµº¯Êı¶¨Òå£¾ ::= £¼ÉùÃ÷Í·²¿£¾'('£¼²ÎÊı±í£¾')' '{'£¼¸´ºÏÓï¾ä£¾'}'
+// ï¼œæœ‰è¿”å›å€¼å‡½æ•°å®šä¹‰ï¼ ::= ï¼œå£°æ˜å¤´éƒ¨ï¼'('ï¼œå‚æ•°è¡¨ï¼')' '{'ï¼œå¤åˆè¯­å¥ï¼'}'
 void compiler::have_return(string name, class_type item_class_type, return_type item_return_type) {
 
 	push_midcode(FUNC_INIT_OP, "", "", name);
@@ -1212,10 +1212,10 @@ void compiler::have_return(string name, class_type item_class_type, return_type 
 	else {
 		pop_sym_list();
 	}
-	//out << "<ÓĞ·µ»ØÖµº¯Êı¶¨Òå>\n";
+	//out << "<æœ‰è¿”å›å€¼å‡½æ•°å®šä¹‰>\n";
 }
 
-// £¼²ÎÊı±í£¾ ::= £¼ÀàĞÍ±êÊ¶·û£¾£¼±êÊ¶·û£¾{,£¼ÀàĞÍ±êÊ¶·û£¾£¼±êÊ¶·û£¾}| £¼¿Õ£¾
+// ï¼œå‚æ•°è¡¨ï¼ ::= ï¼œç±»å‹æ ‡è¯†ç¬¦ï¼ï¼œæ ‡è¯†ç¬¦ï¼{,ï¼œç±»å‹æ ‡è¯†ç¬¦ï¼ï¼œæ ‡è¯†ç¬¦ï¼}| ï¼œç©ºï¼
 void compiler::paratable(int* para_num, int this_func_symbol_num) {
 	para(para_num, this_func_symbol_num);
 	while (sym == "COMMA") {
@@ -1223,7 +1223,7 @@ void compiler::paratable(int* para_num, int this_func_symbol_num) {
 		getsym();
 		para(para_num, this_func_symbol_num);
 	}
-	//out << "<²ÎÊı±í>\n";
+	//out << "<å‚æ•°è¡¨>\n";
 }
 
 void compiler::para(int* para_num, int this_func_symbol_num) {
@@ -1259,7 +1259,7 @@ void compiler::para(int* para_num, int this_func_symbol_num) {
 	}
 }
 
-// £¼¸´ºÏÓï¾ä£¾ ::= £Û£¼³£Á¿ËµÃ÷£¾£İ£Û£¼±äÁ¿ËµÃ÷£¾£İ£¼Óï¾äÁĞ£¾ 
+// ï¼œå¤åˆè¯­å¥ï¼ ::= ï¼»ï¼œå¸¸é‡è¯´æ˜ï¼ï¼½ï¼»ï¼œå˜é‡è¯´æ˜ï¼ï¼½ï¼œè¯­å¥åˆ—ï¼ 
 void compiler::counpund(string name, string func_end_label) {
 	if (sym == "CONSTTK") {
 		//out << "CONSTTK " << word << "\n";
@@ -1269,20 +1269,20 @@ void compiler::counpund(string name, string func_end_label) {
 		var_discription();
 	}
 	statements(name, func_end_label);
-	//out << "<¸´ºÏÓï¾ä>\n";
+	//out << "<å¤åˆè¯­å¥>\n";
 }
 
-// £¼Óï¾äÁĞ£¾ ::= £û£¼Óï¾ä£¾£ı
+// ï¼œè¯­å¥åˆ—ï¼ ::= ï½›ï¼œè¯­å¥ï¼ï½
 void compiler::statements(string name, string func_end_label) {
 	while (sym == "WHILETK" || sym == "FORTK" || sym == "IFTK" || sym == "IDENFR"
 		|| sym == "SCANFTK" || sym == "PRINTFTK" || sym == "SWITCHTK"
 		|| sym == "SEMICN" || sym == "RETURNTK" || sym == "LBRACE") {
 		statement(name, func_end_label);
 	}
-	//out << "<Óï¾äÁĞ>\n";
+	//out << "<è¯­å¥åˆ—>\n";
 }
 
-// £¼Óï¾ä£¾ ::= £¼Ñ­»·Óï¾ä£¾£ü£¼Ìõ¼şÓï¾ä£¾| £¼ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä£¾;  |£¼ÎŞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä£¾;£ü£¼¸³ÖµÓï¾ä£¾;£ü£¼¶ÁÓï¾ä£¾;£ü£¼Ğ´Óï¾ä£¾;£ü£¼Çé¿öÓï¾ä£¾£ü£¼¿Õ£¾;|£¼·µ»ØÓï¾ä£¾; | '{'£¼Óï¾äÁĞ£¾'}' 
+// ï¼œè¯­å¥ï¼ ::= ï¼œå¾ªç¯è¯­å¥ï¼ï½œï¼œæ¡ä»¶è¯­å¥ï¼| ï¼œæœ‰è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥ï¼;  |ï¼œæ— è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥ï¼;ï½œï¼œèµ‹å€¼è¯­å¥ï¼;ï½œï¼œè¯»è¯­å¥ï¼;ï½œï¼œå†™è¯­å¥ï¼;ï½œï¼œæƒ…å†µè¯­å¥ï¼ï½œï¼œç©ºï¼;|ï¼œè¿”å›è¯­å¥ï¼; | '{'ï¼œè¯­å¥åˆ—ï¼'}' 
 void compiler::statement(string name, string func_end_label) {					// switch
 	if (sym == "WHILETK") {
 		loop_state(name, func_end_label);
@@ -1304,14 +1304,14 @@ void compiler::statement(string name, string func_end_label) {					// switch
 		if (find(have_return_func.begin(), have_return_func.end(), word) != have_return_func.end()) {
 			whether_return = true;
 		}
-		if (!find_sym_Local(name)) {										//  ·¶Î§¿ÉÄÜ´íÎó
+		if (!find_sym_Local(name)) {										//  èŒƒå›´å¯èƒ½é”™è¯¯
 			now_func->has_global = true;
 		}
 		getsym();
 		if (sym == "LPARENT") {
 			//out << "LPARENT (\n";
 			getsym();
-			if (sym == "SEMICN" || sym == "COMMA") {	// ÀıÈç c(;;;;; µÄÉµ±Æ´í
+			if (sym == "SEMICN" || sym == "COMMA") {	// ä¾‹å¦‚ c(;;;;; çš„å‚»é€¼é”™
 				error_collect(RPARENT_ERROR, last_word_line);
 			}
 			else {
@@ -1325,11 +1325,11 @@ void compiler::statement(string name, string func_end_label) {					// switch
 				statement1:
 					if (whether_return) {
 						//have_return_use();		////////////////////////////////////////////////////////
-						//out << "<ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä>\n";
+						//out << "<æœ‰è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥>\n";
 					}
 					else {
 						//non_return_use();		/////////////////////////////////////////////////////////
-						//out << "<ÎŞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä>\n";
+						//out << "<æ— è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥>\n";
 					}
 				}
 				else {
@@ -1358,7 +1358,7 @@ void compiler::statement(string name, string func_end_label) {					// switch
 			/*
 			for (int i = 0; i < symbol_num; i++) {
 				if ((*(symbol_list[i])).name == name) {
-					(*(symbol_list[i])).first_use = true;				/////////////////////// assign ¹ıºó, ¸²¸ÇÁËÖ®Ç°µÄÖµ£¬
+					(*(symbol_list[i])).first_use = true;				/////////////////////// assign è¿‡å, è¦†ç›–äº†ä¹‹å‰çš„å€¼ï¼Œ
 				}
 			}
 			*/
@@ -1425,10 +1425,10 @@ void compiler::statement(string name, string func_end_label) {					// switch
 	else {
 		error_collect(SEMICN_ERROR, last_word_line);	/////////////////////////////////
 	}
-	//out << "<Óï¾ä>\n";
+	//out << "<è¯­å¥>\n";
 }
 
-// £¼¸³ÖµÓï¾ä£¾ ::= £¼±êÊ¶·û£¾£½£¼±í´ïÊ½£¾|£¼±êÊ¶·û£¾'['£¼±í´ïÊ½£¾']'=£¼±í´ïÊ½£¾|£¼±êÊ¶·û£¾'['£¼±í´ïÊ½£¾']''['£¼±í´ïÊ½£¾']' =£¼±í´ïÊ½£¾
+// ï¼œèµ‹å€¼è¯­å¥ï¼ ::= ï¼œæ ‡è¯†ç¬¦ï¼ï¼ï¼œè¡¨è¾¾å¼ï¼|ï¼œæ ‡è¯†ç¬¦ï¼'['ï¼œè¡¨è¾¾å¼ï¼']'=ï¼œè¡¨è¾¾å¼ï¼|ï¼œæ ‡è¯†ç¬¦ï¼'['ï¼œè¡¨è¾¾å¼ï¼']''['ï¼œè¡¨è¾¾å¼ï¼']' =ï¼œè¡¨è¾¾å¼ï¼
 void compiler::assign_state(string name, string func_end_label) {
 	if (sym == "ASSIGN") {
 		//out << "ASSIGN =\n";
@@ -1436,7 +1436,7 @@ void compiler::assign_state(string name, string func_end_label) {
 		return_type item_return_type = NOTHING;
 		string expression_value = "";
 		expression(&item_return_type, &expression_value);
-		if (whether_op_is_temp(expression_value)) {				// ×ª»»½á¹û¼Ä´æÆ÷ nb Ğè¿´¶®
+		if (whether_op_is_temp(expression_value)) {				// è½¬æ¢ç»“æœå¯„å­˜å™¨ nb éœ€çœ‹æ‡‚
 			mid_code_struct* code = mid_codes[mid_code_num - 1];
 			code->result_name = name;
 		}
@@ -1470,7 +1470,7 @@ void compiler::assign_state(string name, string func_end_label) {
 				push_midcode(LEFT_ARRAY_OP, tmp_expression_value_right, tmp_expression_value_left_1, name);
 
 				/*
-				for (int i = 0; i < symbol_num; i++) {			//////////////ÆğÊ¼Î»ÖÃ¿ÉÄÜ´íÎó
+				for (int i = 0; i < symbol_num; i++) {			//////////////èµ·å§‹ä½ç½®å¯èƒ½é”™è¯¯
 					if ((*(symbol_list[i])).name == name) {
 						(*(symbol_list[i])).first_use = true;
 					}
@@ -1500,7 +1500,7 @@ void compiler::assign_state(string name, string func_end_label) {
 						expression(&item_return_type, &tmp_expression_value_right);
 
 						int lie = 0;
-						for (int i = 0; i < symbol_num; i++) {			//////////////ÆğÊ¼Î»ÖÃ¿ÉÄÜ´íÎó
+						for (int i = 0; i < symbol_num; i++) {			//////////////èµ·å§‹ä½ç½®å¯èƒ½é”™è¯¯
 							if ((*(symbol_list[i])).name == name) {
 								lie = (*(symbol_list[i])).array_length_lie;
 							}
@@ -1509,7 +1509,7 @@ void compiler::assign_state(string name, string func_end_label) {
 							tmp_expression_value_left_1, tmp_expression_value_left_2, name, lie);
 
 						/*
-						for (int i = 0; i < symbol_num; i++) {			//////////////ÆğÊ¼Î»ÖÃ¿ÉÄÜ´íÎó
+						for (int i = 0; i < symbol_num; i++) {			//////////////èµ·å§‹ä½ç½®å¯èƒ½é”™è¯¯
 							if ((*(symbol_list[i])).name == name) {
 								(*(symbol_list[i])).first_use = true;
 							}
@@ -1530,7 +1530,7 @@ void compiler::assign_state(string name, string func_end_label) {
 		
 
 	}
-	//out << "<¸³ÖµÓï¾ä>\n";
+	//out << "<èµ‹å€¼è¯­å¥>\n";
 	if (sym == "SEMICN") {
 		//out << "SEMICN ;\n";
 		getsym();
@@ -1541,7 +1541,7 @@ void compiler::assign_state(string name, string func_end_label) {
 
 }
 
-// £¼·µ»ØÓï¾ä£¾ ::=  return['('£¼±í´ïÊ½£¾')']   
+// ï¼œè¿”å›è¯­å¥ï¼ ::=  return['('ï¼œè¡¨è¾¾å¼ï¼')']   
 void compiler::return_state(string name, string func_end_label) {
 	if (sym == "RETURNTK") {
 		//out << "RETURNTK " << word << "\n";
@@ -1600,10 +1600,10 @@ void compiler::return_state(string name, string func_end_label) {
 	}
 
 
-	//out << "<·µ»ØÓï¾ä>\n";
+	//out << "<è¿”å›è¯­å¥>\n";
 }
 
-// £¼Çé¿öÓï¾ä£¾ ::=  switch ¡®(¡¯£¼±í´ïÊ½£¾¡®)¡¯ ¡®{¡¯£¼Çé¿ö±í£¾£¼È±Ê¡£¾¡®}¡¯  
+// ï¼œæƒ…å†µè¯­å¥ï¼ ::=  switch â€˜(â€™ï¼œè¡¨è¾¾å¼ï¼â€˜)â€™ â€˜{â€™ï¼œæƒ…å†µè¡¨ï¼ï¼œç¼ºçœï¼â€˜}â€™  
 void compiler::switch_state(string name, string func_end_label) {
 	//out << "SWITCHTK " << word << "\n";
 	getsym();
@@ -1641,10 +1641,10 @@ void compiler::switch_state(string name, string func_end_label) {
 
 	}
 	
-	//out << "<Çé¿öÓï¾ä>\n";
+	//out << "<æƒ…å†µè¯­å¥>\n";
 }
 
-// £¼È±Ê¡£¾ ::=  default :£¼Óï¾ä£¾  
+// ï¼œç¼ºçœï¼ ::=  default :ï¼œè¯­å¥ï¼  
 void compiler::default_table(string name, string func_end_label) {
 	if (sym == "DEFAULTTK") {
 		//out << "DEFAULTTK " << word << "\n";
@@ -1659,12 +1659,12 @@ void compiler::default_table(string name, string func_end_label) {
 		getsym();
 	}
 	statement(name, func_end_label);
-	//out << "<È±Ê¡>\n";
+	//out << "<ç¼ºçœ>\n";
 default_table1:
 	;
 }
 
-// £¼Çé¿ö±í£¾ ::=  £¼Çé¿ö×ÓÓï¾ä£¾{£¼Çé¿ö×ÓÓï¾ä£¾}
+// ï¼œæƒ…å†µè¡¨ï¼ ::=  ï¼œæƒ…å†µå­è¯­å¥ï¼{ï¼œæƒ…å†µå­è¯­å¥ï¼}
 void compiler::case_table(return_type item_return_type, string expression_value,string switch_end_label, string name, string func_end_label) {
 	while (sym == "CASETK") {
 		string next_case_label = "";
@@ -1672,10 +1672,10 @@ void compiler::case_table(return_type item_return_type, string expression_value,
 		case_substate(item_return_type, expression_value, switch_end_label, name, next_case_label, func_end_label);
 		push_midcode(LAB_OP, "", "", next_case_label);
 	}
-	//out << "<Çé¿ö±í>\n";
+	//out << "<æƒ…å†µè¡¨>\n";
 }
 
-// £¼Çé¿ö×ÓÓï¾ä£¾ ::=  case£¼³£Á¿£¾£º£¼Óï¾ä£¾  
+// ï¼œæƒ…å†µå­è¯­å¥ï¼ ::=  caseï¼œå¸¸é‡ï¼ï¼šï¼œè¯­å¥ï¼  
 void compiler::case_substate(return_type item_return_type, string expression_value, string switch_end_label, string name, string next_case_label , string func_end_label) {
 	if (sym == "CASETK") {
 		//out << "CASETK " << word << "\n";
@@ -1710,11 +1710,11 @@ void compiler::case_substate(return_type item_return_type, string expression_val
 				}
 				getsym();
 			}
-			//out << "<ÎŞ·ûºÅÕûÊı>\n";
-			//out << "<ÕûÊı>\n";
+			//out << "<æ— ç¬¦å·æ•´æ•°>\n";
+			//out << "<æ•´æ•°>\n";
 			temp_return_type = INT;
 		}
-		//out << "<³£Á¿>\n";
+		//out << "<å¸¸é‡>\n";
 
 		push_midcode(NEQ_OP, expression_value, to_string(value), next_case_label);
 
@@ -1725,10 +1725,10 @@ void compiler::case_substate(return_type item_return_type, string expression_val
 		}
 		push_midcode(GOTO_OP, "", "", switch_end_label);
 	}
-	//out << "<Çé¿ö×ÓÓï¾ä>\n";
+	//out << "<æƒ…å†µå­è¯­å¥>\n";
 }
 
-// £¼³£Á¿£¾ ::=  £¼ÕûÊı£¾|£¼×Ö·û£¾
+// ï¼œå¸¸é‡ï¼ ::=  ï¼œæ•´æ•°ï¼|ï¼œå­—ç¬¦ï¼
 return_type compiler::constant() {
 	if (sym == "CHARCON") {
 		//out << "CHARCON " << word << "\n";
@@ -1740,10 +1740,10 @@ return_type compiler::constant() {
 		integer(&value);
 		return INT;
 	}
-	//out << "<³£Á¿>\n";
+	//out << "<å¸¸é‡>\n";
 }
 
-// £¼Ğ´Óï¾ä£¾ ::= printf '(' £¼×Ö·û´®£¾,£¼±í´ïÊ½£¾ ')'| printf '('£¼×Ö·û´®£¾ ')'| printf '('£¼±í´ïÊ½£¾')' 
+// ï¼œå†™è¯­å¥ï¼ ::= printf '(' ï¼œå­—ç¬¦ä¸²ï¼,ï¼œè¡¨è¾¾å¼ï¼ ')'| printf '('ï¼œå­—ç¬¦ä¸²ï¼ ')'| printf '('ï¼œè¡¨è¾¾å¼ï¼')' 
 void compiler::printf_state(string name, string func_end_label) {
 	string* s = 0;
 	//out << "PRINTFTK " << word << "\n";
@@ -1820,16 +1820,16 @@ void compiler::printf_state(string name, string func_end_label) {
 	else {
 		error_collect(RPARENT_ERROR, last_word_line);
 	}
-	//out << "<Ğ´Óï¾ä>\n";
+	//out << "<å†™è¯­å¥>\n";
 }
 
-// £¼×Ö·û´®£¾ ::=  "£ûÊ®½øÖÆ±àÂëÎª32,33,35-126µÄASCII×Ö·û£ı" //×Ö·û´®ÖĞÒªÇóÖÁÉÙÓĞÒ»¸ö×Ö·û
+// ï¼œå­—ç¬¦ä¸²ï¼ ::=  "ï½›åè¿›åˆ¶ç¼–ç ä¸º32,33,35-126çš„ASCIIå­—ç¬¦ï½" //å­—ç¬¦ä¸²ä¸­è¦æ±‚è‡³å°‘æœ‰ä¸€ä¸ªå­—ç¬¦
 void compiler::string_() {
-	//out << "<×Ö·û´®>\n";
+	//out << "<å­—ç¬¦ä¸²>\n";
 	getsym();
 }
 
-// £¼¶ÁÓï¾ä£¾ ::=  scanf '('£¼±êÊ¶·û£¾')' 
+// ï¼œè¯»è¯­å¥ï¼ ::=  scanf '('ï¼œæ ‡è¯†ç¬¦ï¼')' 
 void compiler::scanf_state(string name, string func_end_label) {
 	//out << "SCANFTK " << word << "\n";
 	getsym();
@@ -1854,12 +1854,12 @@ void compiler::scanf_state(string name, string func_end_label) {
  					if ((*(symbol_list[i])).item_return_type == INT) {
 						push_midcode(SCANF_OP, name, "int", name);
 						whether_find_in_local = true;
-						//(*(symbol_list[i])).first_use = true;				// ¸²¸Çµô
+						//(*(symbol_list[i])).first_use = true;				// è¦†ç›–æ‰
 					}
 					if ((*(symbol_list[i])).item_return_type == CHAR) {
 						push_midcode(SCANF_OP, name, "char", name);
 						whether_find_in_local = true;
-						//(*(symbol_list[i])).first_use = true;				// ¸²¸Çµô
+						//(*(symbol_list[i])).first_use = true;				// è¦†ç›–æ‰
 					}
 				}
 			}
@@ -1873,11 +1873,11 @@ void compiler::scanf_state(string name, string func_end_label) {
 					}
 					if (temp_sym->item_return_type == INT) {
 						push_midcode(SCANF_OP, name, "int", name);
-						//(*(symbol_list[i])).first_use = true;				// ¸²¸Çµô
+						//(*(symbol_list[i])).first_use = true;				// è¦†ç›–æ‰
 					}
 					if (temp_sym->item_return_type == CHAR) {
 						push_midcode(SCANF_OP, name, "char", name);
-						//(*(symbol_list[i])).first_use = true;				// ¸²¸Çµô
+						//(*(symbol_list[i])).first_use = true;				// è¦†ç›–æ‰
 					}
 				}
 			}
@@ -1891,10 +1891,10 @@ void compiler::scanf_state(string name, string func_end_label) {
 			}
 		}
 	}
-	//out << "<¶ÁÓï¾ä>\n";
+	//out << "<è¯»è¯­å¥>\n";
 }
 
-// £¼Ìõ¼şÓï¾ä£¾ ::= if '('£¼Ìõ¼ş£¾')'£¼Óï¾ä£¾£Ûelse£¼Óï¾ä£¾£İ
+// ï¼œæ¡ä»¶è¯­å¥ï¼ ::= if '('ï¼œæ¡ä»¶ï¼')'ï¼œè¯­å¥ï¼ï¼»elseï¼œè¯­å¥ï¼ï¼½
 void compiler::if_state(string name, string func_end_label) {
 	//out << "IFTK " << word << "\n";
 	getsym();
@@ -1931,10 +1931,10 @@ void compiler::if_state(string name, string func_end_label) {
 			goto if_state1;
 		}
 	}
-	//out << "<Ìõ¼şÓï¾ä>\n";
+	//out << "<æ¡ä»¶è¯­å¥>\n";
 }
 
-// £¼Ñ­»·Óï¾ä£¾ ::=  while '('£¼Ìõ¼ş£¾')'£¼Óï¾ä£¾| for'('£¼±êÊ¶·û£¾£½£¼±í´ïÊ½£¾;£¼Ìõ¼ş£¾;£¼±êÊ¶·û£¾£½£¼±êÊ¶·û£¾(+|-)£¼²½³¤£¾')'£¼Óï¾ä£¾    
+// ï¼œå¾ªç¯è¯­å¥ï¼ ::=  while '('ï¼œæ¡ä»¶ï¼')'ï¼œè¯­å¥ï¼| for'('ï¼œæ ‡è¯†ç¬¦ï¼ï¼ï¼œè¡¨è¾¾å¼ï¼;ï¼œæ¡ä»¶ï¼;ï¼œæ ‡è¯†ç¬¦ï¼ï¼ï¼œæ ‡è¯†ç¬¦ï¼(+|-)ï¼œæ­¥é•¿ï¼')'ï¼œè¯­å¥ï¼    
 void compiler::loop_state(string name, string func_end_label) {
 	if (sym == "WHILETK") {
 		//out << "WHILETK " << word << "\n";
@@ -1988,7 +1988,7 @@ void compiler::loop_state(string name, string func_end_label) {
 					string tmp_expression_value = "";
 					expression(&item_return_type, &tmp_expression_value);
 
-					if (whether_op_is_temp(tmp_expression_value)) {				////////////////////////////////Ã»¶®
+					if (whether_op_is_temp(tmp_expression_value)) {				////////////////////////////////æ²¡æ‡‚
 						mid_code_struct* code = mid_codes[mid_code_num - 1];
 						code->result_name = sym1->name;
 					}
@@ -1997,7 +1997,7 @@ void compiler::loop_state(string name, string func_end_label) {
 						/*
 						for (int i = 0; i < symbol_num; i++) {
 							if ((*(symbol_list[i])).name == name) {
-								(*(symbol_list[i])).first_use = true;				/////////////////////// assign ¹ıºó, ¸²¸ÇÁËÖ®Ç°µÄÖµ£¬
+								(*(symbol_list[i])).first_use = true;				/////////////////////// assign è¿‡å, è¦†ç›–äº†ä¹‹å‰çš„å€¼ï¼Œ
 							}
 						}
 						*/
@@ -2062,13 +2062,13 @@ void compiler::loop_state(string name, string func_end_label) {
 											foodstep_num = word;
 											getsym();
 										}
-										//out << "<ÎŞ·ûºÅÕûÊı>\n";
-										//out << "<²½³¤>\n";
+										//out << "<æ— ç¬¦å·æ•´æ•°>\n";
+										//out << "<æ­¥é•¿>\n";
 
 										/*
 										for (int i = 0; i < symbol_num; i++) {
 											if ((*(symbol_list[i])).name == name) {
-												(*(symbol_list[i])).first_use = true;				/////////////////////// assign ¹ıºó, ¸²¸ÇÁËÖ®Ç°µÄÖµ£¬
+												(*(symbol_list[i])).first_use = true;				/////////////////////// assign è¿‡å, è¦†ç›–äº†ä¹‹å‰çš„å€¼ï¼Œ
 											}
 										}
 										*/
@@ -2102,7 +2102,7 @@ void compiler::loop_state(string name, string func_end_label) {
 			}
 		}
 	}
-	//out << "<Ñ­»·Óï¾ä>\n";
+	//out << "<å¾ªç¯è¯­å¥>\n";
 }
 
 void compiler::non_sign_integer() {
@@ -2110,17 +2110,17 @@ void compiler::non_sign_integer() {
 		//out << "INTCON " << word << "\n";
 		getsym();
 	}
-	//out << "<ÎŞ·ûºÅÕûÊı>\n";
+	//out << "<æ— ç¬¦å·æ•´æ•°>\n";
 }
 
 
-// £¼²½³¤£¾ ::= £¼ÎŞ·ûºÅÕûÊı£¾ 
+// ï¼œæ­¥é•¿ï¼ ::= ï¼œæ— ç¬¦å·æ•´æ•°ï¼ 
 void compiler::foodstep() {
 	non_sign_integer();
-	//out << "<²½³¤>\n";
+	//out << "<æ­¥é•¿>\n";
 }
 
-// £¼Ìõ¼ş£¾ ::=  £¼±í´ïÊ½£¾£¼¹ØÏµÔËËã·û£¾£¼±í´ïÊ½£¾
+// ï¼œæ¡ä»¶ï¼ ::=  ï¼œè¡¨è¾¾å¼ï¼ï¼œå…³ç³»è¿ç®—ç¬¦ï¼ï¼œè¡¨è¾¾å¼ï¼
 void compiler::condition(string label, bool flag) {
 	return_type item_return_type = NOTHING;
 
@@ -2185,10 +2185,10 @@ void compiler::condition(string label, bool flag) {
 	
 	
 
-	//out << "<Ìõ¼ş>\n";
+	//out << "<æ¡ä»¶>\n";
 }
 
-// £¼±í´ïÊ½£¾ ::= £Û£«£ü£­£İ£¼Ïî£¾{£¼¼Ó·¨ÔËËã·û£¾£¼Ïî£¾}
+// ï¼œè¡¨è¾¾å¼ï¼ ::= ï¼»ï¼‹ï½œï¼ï¼½ï¼œé¡¹ï¼{ï¼œåŠ æ³•è¿ç®—ç¬¦ï¼ï¼œé¡¹ï¼}
 void compiler::expression(return_type* item_return_type, string* expression_value) {
 
 	bool neg = false;
@@ -2232,7 +2232,7 @@ void compiler::expression(return_type* item_return_type, string* expression_valu
 		}
 		string expression_value2 = "";
 		term(item_return_type, &expression_value2);
-		*item_return_type = INT;	// only one ×Ö·û£¬ÕûÊı£¬ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä
+		*item_return_type = INT;	// only one å­—ç¬¦ï¼Œæ•´æ•°ï¼Œæœ‰è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥
 
 		if (whether_op_is_num(expression_value1)) {
 			if (whether_op_is_num(expression_value2)) {
@@ -2258,7 +2258,7 @@ void compiler::expression(return_type* item_return_type, string* expression_valu
 			}
 			else {
 				if (is_add) {
-					push_midcode(ADD_OP, expression_value1, expression_value2, expression_value2); // expression_value2 ÊÇ±í´ïÊ½
+					push_midcode(ADD_OP, expression_value1, expression_value2, expression_value2); // expression_value2 æ˜¯è¡¨è¾¾å¼
 				}
 				else {
 					push_midcode(SUB_OP, expression_value1, expression_value2, expression_value2);
@@ -2287,10 +2287,10 @@ void compiler::expression(return_type* item_return_type, string* expression_valu
 		}
 	}
 	*expression_value = expression_value1;
-	//out << "<±í´ïÊ½>\n";
+	//out << "<è¡¨è¾¾å¼>\n";
 }
 
-// £¼Ïî£¾ ::= £¼Òò×Ó£¾{£¼³Ë·¨ÔËËã·û£¾£¼Òò×Ó£¾} 
+// ï¼œé¡¹ï¼ ::= ï¼œå› å­ï¼{ï¼œä¹˜æ³•è¿ç®—ç¬¦ï¼ï¼œå› å­ï¼} 
 void compiler::term(return_type* item_return_type, string* expression_value) {
 
 	string expression_value1 = "";
@@ -2310,7 +2310,7 @@ void compiler::term(return_type* item_return_type, string* expression_value) {
 		}
 		string expression_value2 = "";
 		factor(item_return_type, &expression_value2);
-		*item_return_type = INT;	// only one ×Ö·û£¬ÕûÊı£¬ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä
+		*item_return_type = INT;	// only one å­—ç¬¦ï¼Œæ•´æ•°ï¼Œæœ‰è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥
 
 		if (whether_op_is_num(expression_value1)) {
 			if (whether_op_is_num(expression_value2)) {
@@ -2367,10 +2367,10 @@ void compiler::term(return_type* item_return_type, string* expression_value) {
 		}
 	}
 	*expression_value = expression_value1;
-	//out << "<Ïî>\n";
+	//out << "<é¡¹>\n";
 }
 
-// £¼Òò×Ó£¾ ::= £¼±êÊ¶·û£¾£ü£¼±êÊ¶·û£¾'['£¼±í´ïÊ½£¾']'|£¼±êÊ¶·û£¾'['£¼±í´ïÊ½£¾']''['£¼±í´ïÊ½£¾']'|'('£¼±í´ïÊ½£¾')'£ü£¼ÕûÊı£¾|£¼×Ö·û£¾£ü£¼ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä£¾         
+// ï¼œå› å­ï¼ ::= ï¼œæ ‡è¯†ç¬¦ï¼ï½œï¼œæ ‡è¯†ç¬¦ï¼'['ï¼œè¡¨è¾¾å¼ï¼']'|ï¼œæ ‡è¯†ç¬¦ï¼'['ï¼œè¡¨è¾¾å¼ï¼']''['ï¼œè¡¨è¾¾å¼ï¼']'|'('ï¼œè¡¨è¾¾å¼ï¼')'ï½œï¼œæ•´æ•°ï¼|ï¼œå­—ç¬¦ï¼ï½œï¼œæœ‰è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥ï¼         
 void compiler::factor(return_type* item_return_type, string* expression_value) {
 	if (sym == "IDENFR") {
 		//out << "IDENFR " << word << "\n";
@@ -2423,7 +2423,7 @@ void compiler::factor(return_type* item_return_type, string* expression_value) {
 					Deal_with_temp(expression_value); 
 					
 					int lie = 0;
-					for (int i = 0; i < symbol_num; i++) {			//////////////ÆğÊ¼Î»ÖÃ¿ÉÄÜ´íÎó
+					for (int i = 0; i < symbol_num; i++) {			//////////////èµ·å§‹ä½ç½®å¯èƒ½é”™è¯¯
 						if ((*(symbol_list[i])).name == name) {
 							lie = (*(symbol_list[i])).array_length_lie;
 						}
@@ -2443,7 +2443,7 @@ void compiler::factor(return_type* item_return_type, string* expression_value) {
 		if (sym == "LPARENT") {
 			//out << "LPARENT (\n";
 			getsym();
-			if (sym == "SEMICN" || sym == "COMMA") {	// ÀıÈç c(;;;;; µÄÉµ±Æ´í
+			if (sym == "SEMICN" || sym == "COMMA") {	// ä¾‹å¦‚ c(;;;;; çš„å‚»é€¼é”™
 				error_collect(RPARENT_ERROR, last_word_line);
 			}
 			else {
@@ -2465,7 +2465,7 @@ void compiler::factor(return_type* item_return_type, string* expression_value) {
 					error_collect(RPARENT_ERROR, last_word_line);
 				}
 			}
-			//out << "<ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä>\n";
+			//out << "<æœ‰è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥>\n";
 		}
 		else {
 			if (sym_record->item_class_type == VAR || sym_record->item_class_type == PARA) {
@@ -2519,15 +2519,15 @@ void compiler::factor(return_type* item_return_type, string* expression_value) {
 		integer(&value);
 		*expression_value = to_string(value);
 	}
-	//out << "<Òò×Ó>\n";
+	//out << "<å› å­>\n";
 }
 
-// £¼ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä£¾ ::= £¼±êÊ¶·û£¾'('£¼Öµ²ÎÊı±í£¾')' 
+// ï¼œæœ‰è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥ï¼ ::= ï¼œæ ‡è¯†ç¬¦ï¼'('ï¼œå€¼å‚æ•°è¡¨ï¼')' 
 void compiler::have_return_use(string name) {
 	if (sym == "LPARENT") {
 		//out << "LPARENT (\n";
 		getsym();
-		if (sym == "SEMICN" || sym == "COMMA") {	// ÀıÈç c(;;;;; µÄÉµ±Æ´í
+		if (sym == "SEMICN" || sym == "COMMA") {	// ä¾‹å¦‚ c(;;;;; çš„å‚»é€¼é”™
 			error_collect(RPARENT_ERROR, last_word_line);
 		}
 		else {
@@ -2542,7 +2542,7 @@ void compiler::have_return_use(string name) {
 			}
 		}
 	}
-	//out << "<ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä>\n";
+	//out << "<æœ‰è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥>\n";
 }
 
 /*
@@ -2559,11 +2559,11 @@ void compiler::non_return_use() {
 			error_collect(RPARENT_ERROR);
 		}
 	}
-	//out << "<ÎŞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä>\n";
+	//out << "<æ— è¿”å›å€¼å‡½æ•°è°ƒç”¨è¯­å¥>\n";
 }
 */
 
-// £¼Öµ²ÎÊı±í£¾ ::= £¼±í´ïÊ½£¾{,£¼±í´ïÊ½£¾}£ü£¼¿Õ£¾   
+// ï¼œå€¼å‚æ•°è¡¨ï¼ ::= ï¼œè¡¨è¾¾å¼ï¼{,ï¼œè¡¨è¾¾å¼ï¼}ï½œï¼œç©ºï¼   
 void compiler::value_para(string name) {
 	whether_use_func_para_num_right = true;
 	whether_use_func_para_type_right = true;
@@ -2621,7 +2621,7 @@ void compiler::value_para(string name) {
 			error_collect(FUNC_PARA_NUM_ERROR, line);
 		}
 	}
-	//out << "<Öµ²ÎÊı±í>\n";
+	//out << "<å€¼å‚æ•°è¡¨>\n";
 }
 
 void compiler::analysis_first_letter() {
@@ -2641,1662 +2641,3 @@ void compiler::analysis_first_letter() {
 	}
 }
 
-/*
-#include "compiler.h"
-
-void compiler::memorize_two_steps() {
-
-	now_point = in.tellg();
-	word1 = word;
-	sym1 = sym;
-	getsym();
-	word2 = word;
-	sym2 = sym;
-	getsym();
-}
-
-void compiler::goesback_two_steps() {
-	sym = sym1;
-	word = word1;
-	in.seekg(now_point, ios::beg);
-}
-
-void compiler::program() {
-	getsym();
-	if (sym == "CONSTTK") {
-		//out << "CONSTTK " << word << "\n";
-		const_discription();
-	}
-	temp_line = line;
-	memorize_two_steps();
-
-	while (sym != "LPARENT") {
-		goesback_two_steps();
-		line = temp_line;
-		var_discription();
-
-		temp_line = line;
-		memorize_two_steps();
-	}
-
-	while (sym2 != "MAINTK") {
-		goesback_two_steps();
-		line = temp_line;
-
-		if (sym == "VOIDTK") {
-			enter_func();
-			non_return();
-		}
-		else {
-			class_type item_class_type = FUNC;
-			return_type item_return_type = NOTHING;
-			string name;
-			if (sym == "INTTK") {
-				//out << "INTTK " << word << "\n";
-				item_return_type = INT;
-				sym2 = sym;
-				getsym();
-			}
-			else if (sym == "CHARTK") {
-				//out << "CHARTK " << word << "\n";
-				item_return_type = CHAR;
-				sym2 = sym;
-				getsym();
-			}
-			if (sym == "IDENFR") {
-				//out << "IDENFR " << word << "\n";
-				name = word;
-				transform(name.begin(), name.end(), name.begin(), ::tolower);
-				getsym();
-			}
-			if (sym == "LPARENT") {
-				//out << "<ÉùÃ÷Í·²¿>\n";
-				//out << "LPARENT (\n";
-				have_return_func.push_back(word);
-				getsym();
-				enter_func();
-				have_return(name, item_class_type, item_return_type);
-			}
-		}
-		temp_line = line;
-		memorize_two_steps();
-	}
-	goesback_two_steps();
-	line = temp_line;
-
-	//out << "VOIDTK " << word << "\n";
-	getsym();
-
-	class_type item_class_type = FUNC;
-	return_type item_return_type = VOID;
-	string name = "main";
-	if (whether_redefine_name_when_use_FUNC(name)) {
-		error_collect(REDEFINE_NAME_ERROR, line);
-	}
-	else {
-		push_sym_list(name, item_class_type, item_return_type, 0, line);
-	}
-	enter_func();
-	main_func();
-	pop_sym_list();
-	//out << "<Ö÷º¯Êı>\n";
-	//out << "<³ÌĞò>\n";
-}
-
-
-void compiler::var_discription() {
-
-	while (sym == "INTTK" || sym == "CHARTK") {
-
-		int temp_line = line;
-		memorize_two_steps();
-
-		if (sym != "LPARENT") {
-			goesback_two_steps();
-			line = temp_line;
-			var_defination();
-		}
-		else {
-			line = temp_line;
-			goesback_two_steps();
-			break;
-		}
-	}
-	//out << "<±äÁ¿ËµÃ÷>\n";
-}
-
-void compiler::var_defination() {
-	temp_line = line;
-	now_point = in.tellg();
-	sym1 = sym;
-	bool whether_have_equal = false;
-	while (sym != "SEMICN" && last_word_line == line) {		// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-		if (sym == "ASSIGN") {
-			whether_have_equal = true;
-			goesback_two_steps();	//Êµ¼ÊÉÏÕâÀïÊÇgoesback_one_step
-			line = temp_line;
-			var_def_init();
-			//break;
-		}
-		else {
-			getsym();
-		}
-	}
-	if (!whether_have_equal) {
-		goesback_two_steps();	//Êµ¼ÊÉÏÕâÀïÊÇgoesback_one_step
-		line = temp_line;
-		var_def_non_init();
-	}
-	//out << "<±äÁ¿¶¨Òå>\n";
-	if (sym == "SEMICN") {
-		//out << "SEMICN ;\n";
-		getsym();
-	}
-	else {
-		error_collect(SEMICN_ERROR, last_word_line);
-	}
-}
-
-void compiler::var_def_init() {
-	class_type item_class_type = VAR;
-	return_type item_return_type = NOTHING;
-	string name;
-	if (sym == "INTTK") {
-		//out << "INTTK " << word << "\n";
-		sym2 = sym;
-		item_return_type = INT;
-		getsym();
-	}
-	else if (sym == "CHARTK") {
-		//out << "CHARTK " << word << "\n";
-		sym2 = sym;
-		item_return_type = CHAR;
-		getsym();
-	}
-	if (sym == "IDENFR") {
-		//out << "IDENFR " << word << "\n";
-		name = word;
-		transform(name.begin(), name.end(), name.begin(), ::tolower);
-		getsym();
-	}
-	if (sym == "ASSIGN") {
-		//out << "ASSIGN =\n";
-		getsym();
-		if ( item_return_type != constant()) {
-			error_collect(CONST_VALUE_TYPE_ERROR, line);
-		}
-		if (whether_redefine_name_when_use_IDENFR(name)) {
-			error_collect(REDEFINE_NAME_ERROR, line);
-		}
-		else {
-			push_sym_list(name, item_class_type, item_return_type, 0, line);
-		}
-	}
-	if (sym == "LBRACK") {			////////////////////////////////////////////////////else if
-		//out << "LBRACK [\n";
-		item_class_type = ARRAY;
-		if (whether_redefine_name_when_use_IDENFR(name)) {
-			error_collect(REDEFINE_NAME_ERROR, line);
-		}
-		else {
-			push_sym_list(name, item_class_type, item_return_type, 0, line);
-		}
-
-		getsym();
-
-		int hang_expected = 0;
-		if (sym == "INTCON") {
-			//out << "INTCON " << word << "\n";
-			hang_expected = std::stoi(word);
-			getsym();
-		}
-		else {
-			error_collect(ARRAY_INDEX_INTEGER_ERROR, line);
-			getsym();
-		}
-		if (sym == "RBRACK") {
-			//out << "RBRACK ]\n";
-			getsym();
-		var_def_init1:
-			if (sym == "ASSIGN") {
-				//out << "ASSIGN =\n";
-				getsym();
-				if (sym == "LBRACE") {
-					//out << "LBRACE {\n";
-					getsym();
-					int volume1 = 0;
-					if (item_return_type != constant()) {
-						error_collect(CONST_VALUE_TYPE_ERROR, line);
-					}
-					volume1 = volume1 + 1;
-					while (sym == "COMMA") {
-						//out << "COMMA ,\n";
-						getsym();
-						if (item_return_type != constant()) {
-							error_collect(CONST_VALUE_TYPE_ERROR, line);
-						}
-						volume1 = volume1 + 1;
-					}
-					if (sym == "RBRACE") {
-						//out << "RBRACE }\n";
-						getsym();
-					}
-					if (hang_expected != volume1) {
-						error_collect(ARRAY_INIT_NUM_ERROR, line);
-					}
-				}
-				else {
-					error_collect(ARRAY_INIT_NUM_ERROR, line);
-					getsym(); //////////////////////////////////////////////////////////////////////ÉÙÎ¬ÊıµÄÎ¨Ò»´í·¨£¿
-				}
-			}
-
-
-			if (sym == "LBRACK") {
-				//out << "LBRACK [\n";
-				int lie_expected = 0;
-				getsym();
-				if (sym == "INTCON") {
-					//out << "INTCON " << word << "\n";
-					lie_expected = std::stoi(word);
-					getsym();
-				}
-				else {
-					error_collect(ARRAY_INDEX_INTEGER_ERROR, line);
-					getsym();
-				}
-				if (sym == "RBRACK") {
-					//out << "RBRACK ]\n";
-					getsym();
-				var_def_init2:
-					if (sym == "ASSIGN") {
-						//out << "ASSIGN =\n";
-						getsym();
-						if (sym == "LBRACE") {
-							//out << "LBRACE {\n";
-							getsym();
-
-							if (sym == "LBRACE") {
-								//out << "LBRACE {\n";
-								int hang_volume = 0;
-								hang_volume = hang_volume + 1;
-								getsym();
-								int lie_volume = 0;
-								if (item_return_type != constant()) {
-									error_collect(CONST_VALUE_TYPE_ERROR, line);
-								}
-								lie_volume = lie_volume + 1;
-								while (sym == "COMMA") {
-									//out << "COMMA ,\n";
-									getsym();
-									if (item_return_type != constant()) {
-										error_collect(CONST_VALUE_TYPE_ERROR, line);
-									}
-									lie_volume = lie_volume + 1;
-								}
-								if (sym == "RBRACE") {
-									//out << "RBRACE }\n";
-									if (lie_expected != lie_volume) {
-										error_collect(ARRAY_INIT_NUM_ERROR, line);
-									}
-									lie_volume = 0;
-									getsym();
-
-									while (sym == "COMMA") {
-										//out << "COMMA ,\n";
-										hang_volume = hang_volume + 1;
-										getsym();
-										if (sym == "LBRACE") {
-											//out << "LBRACE {\n";
-											lie_volume = 0;
-											getsym();
-											if (item_return_type != constant()) {
-												error_collect(CONST_VALUE_TYPE_ERROR, line);
-											}
-											lie_volume = lie_volume + 1;
-											while (sym == "COMMA") {
-												//out << "COMMA ,\n";
-												getsym();
-												if (item_return_type != constant()) {
-													error_collect(CONST_VALUE_TYPE_ERROR, line);
-												}
-												lie_volume = lie_volume + 1;
-												if (sym == "RBRACE") {
-													//out << "RBRACE }\n";
-													if (lie_expected != lie_volume) {
-														error_collect(ARRAY_INIT_NUM_ERROR, line);
-													}
-													lie_volume = 0;
-													getsym();
-													break;
-												}
-											}
-										}
-									}
-									if (hang_expected != hang_volume){
-										error_collect(ARRAY_INIT_NUM_ERROR, line);			////////////////////////////////////ºóÃæ²»½Ógetsym()
-									}
-									if (sym == "RBRACE") {
-										//out << "RBRACE }\n";
-										getsym();
-									}
-								}
-							}
-							else {
-								error_collect(ARRAY_INIT_NUM_ERROR, line);
-								for (int i = 0; i <= lie_expected; i++) {
-									getsym();							/////////////////////////¶Áµô ¡°2}¡± , ÍÆµ½ÏÂÒ»¸ögetsym
-								}
-							}
-						}
-						else {
-							error_collect(ARRAY_INIT_NUM_ERROR, line);
-							getsym();								////////////////////////¶Áµôµ¥Ò»µÄÊı×Ö
-						}
-					}
-				}
-				else {
-					error_collect(RBRACK_ERROR, last_word_line);
-					goto var_def_init2;
-				}
-			}
-		}
-		else {
-			error_collect(RBRACK_ERROR, last_word_line);
-			goto var_def_init1;
-		}
-	}
-	//out << "<±äÁ¿¶¨Òå¼°³õÊ¼»¯>\n";
-}
-
-void compiler::var_def_non_init() {
-	class_type item_class_type = VAR;
-	return_type item_return_type = NOTHING;
-	string name;
-	if (sym == "INTTK") {
-		//out << "INTTK " << word << "\n";
-		sym2 = sym;
-		item_return_type = INT;
-		getsym();
-	}
-	else if (sym == "CHARTK") {
-		//out << "CHARTK " << word << "\n";
-		sym2 = sym;
-		item_return_type = CHAR;
-		getsym();
-	}
-	if (sym == "IDENFR") {
-		//out << "IDENFR " << word << "\n";
-		name = word;
-		transform(name.begin(), name.end(), name.begin(), ::tolower);
-		getsym();
-	}
-
-	if (sym == "LBRACK") {
-		//out << "LBRACK [\n";
-		item_class_type = ARRAY;
-		if (whether_redefine_name_when_use_IDENFR(name)) {
-			error_collect(REDEFINE_NAME_ERROR, line);
-		}
-		else {
-			push_sym_list(name, item_class_type, item_return_type, 0, line);
-		}
-
-		getsym();
-
-		//ÏÂ±ê
-		if (sym == "INTCON") {
-			//out << "INTCON " << word << "\n";
-			getsym();
-		}
-		else {
-			error_collect(ARRAY_INDEX_INTEGER_ERROR, line);
-			getsym();
-		}
-
-		if (sym == "RBRACK") {
-			//out << "RBRACK ]\n";
-			getsym();
-		var_def_non_init1:
-			if (sym == "LBRACK") {
-				//out << "LBRACK [\n";
-				getsym();
-
-				//ÏÂ±ê
-				if (sym == "INTCON") {
-					//out << "INTCON " << word << "\n";
-					getsym();
-				}
-				else {
-					error_collect(ARRAY_INDEX_INTEGER_ERROR, line);
-					getsym();
-				}
-
-				if (sym == "RBRACK") {
-					//out << "RBRACK ]\n";
-					getsym();
-				}
-				else {
-					error_collect(RBRACK_ERROR, last_word_line);
-				}
-			}
-		}
-		else {
-			error_collect(RBRACK_ERROR, last_word_line);
-			goto var_def_non_init1;
-		}
-	}
-	else {
-		if (whether_redefine_name_when_use_IDENFR(name)) {
-			error_collect(REDEFINE_NAME_ERROR, line);
-		}
-		else {
-			push_sym_list(name, item_class_type, item_return_type, 0, line);
-		}
-	}
-
-	while (sym == "COMMA") {
-
-		//out << "COMMA ,\n";
-		getsym();
-
-		if (sym == "IDENFR") {
-			//out << "IDENFR " << word << "\n";
-			name = word;
-			transform(name.begin(), name.end(), name.begin(), ::tolower);
-			getsym();
-		}
-
-		if (sym == "LBRACK") {
-			//out << "LBRACK [\n";
-			item_class_type = ARRAY;
-			if (whether_redefine_name_when_use_IDENFR(name)) {
-				error_collect(REDEFINE_NAME_ERROR, line);
-			}
-			else {
-				push_sym_list(name, item_class_type, item_return_type, 0, line);
-			}
-			getsym();
-
-			//ÏÂ±ê
-			if (sym == "INTCON") {
-				//out << "INTCON " << word << "\n";
-				getsym();
-			}
-			else {
-				error_collect(ARRAY_INDEX_INTEGER_ERROR, line);
-				getsym();
-			}
-
-			if (sym == "RBRACK") {
-				//out << "RBRACK ]\n";
-				getsym();
-			var_def_non_init2:
-				if (sym == "LBRACK") {
-					//out << "LBRACK [\n";
-					getsym();
-
-					//ÏÂ±ê
-					if (sym == "INTCON") {
-						//out << "INTCON " << word << "\n";
-						getsym();
-					}
-					else {
-						error_collect(ARRAY_INDEX_INTEGER_ERROR, line);
-						getsym();
-					}
-
-					if (sym == "RBRACK") {
-						//out << "RBRACK ]\n";
-						getsym();
-					}
-					else {
-						error_collect(RBRACK_ERROR, last_word_line);
-					}
-				}
-			}
-			else {
-				error_collect(RBRACK_ERROR, last_word_line);
-				goto var_def_non_init2;
-			}
-		}
-		else {
-			item_class_type = VAR;
-			if (whether_redefine_name_when_use_IDENFR(name)) {
-				error_collect(REDEFINE_NAME_ERROR, line);
-			}
-			else {
-				push_sym_list(name, item_class_type, item_return_type, 0, line);
-			}
-		}
-	}
-	//out << "<±äÁ¿¶¨ÒåÎŞ³õÊ¼»¯>\n";
-}
-
-void compiler::main_func() {
-	if (sym == "MAINTK") {
-		//out << "MAINTK " << word << "\n";
-		getsym();
-		if (sym == "LPARENT") {
-			//out << "LPARENT (\n";
-			getsym();
-			if (sym == "RPARENT") {
-				//out << "RPARENT )\n";
-				getsym();
-			main_func1:
-				if (sym == "LBRACE") {
-					//out << "LBRACE {\n";
-					getsym();
-
-					now_func_return_type_expected = VOID;
-					counpund();
-
-					if (sym == "RBRACE") {
-						//out << "RBRACE }\n";
-						getsym();
-					}
-				}
-			}
-			else {
-				error_collect(RPARENT_ERROR, last_word_line);
-				goto main_func1;
-			}
-		}
-	}
-}
-
-void compiler::const_discription() {
-	do {
-		getsym();
-		const_defination();
-		if (sym == "SEMICN") {
-			//out << "SEMICN ;\n";
-			getsym();
-		const_discription1:
-			if (sym == "CONSTTK") {
-				//out << "CONSTTK " << word << "\n";
-			}
-		}
-		else {
-			error_collect(SEMICN_ERROR, last_word_line);
-			goto const_discription1;
-		}
-	} while (sym == "CONSTTK");
-	//out << "<³£Á¿ËµÃ÷>\n";
-}
-
-void compiler::const_defination() {
-	class_type item_class_type = CONST;
-	if (sym == "INTTK") {
-		return_type item_return_type = INT;
-		//out << "INTTK " << word << "\n";
-		do {
-			getsym();
-			string name = word;
-			transform(name.begin(), name.end(), name.begin(), ::tolower);
-			if (whether_redefine_name_when_use_IDENFR(name)) {
-				error_collect(REDEFINE_NAME_ERROR, line);
-			}
-			else {
-				push_sym_list(name, item_class_type, item_return_type, 0, line);
-			}
-			if (sym == "IDENFR") {
-				//out << "IDENFR " << word << "\n";
-				getsym();
-				if (sym == "ASSIGN") {
-					//out << "ASSIGN =\n";
-					getsym();
-				}
-				if (sym == "PLUS") {
-					//out << "PLUS +\n";
-					getsym();
-				}
-				else if (sym == "MINU") {
-					//out << "MINU -\n";
-					getsym();
-				}
-				if (sym == "INTCON") {
-					//out << "INTCON " << word << "\n";
-					getsym();
-					//out << "<ÎŞ·ûºÅÕûÊı>\n";
-				}
-			}
-			if (sym == "COMMA") {
-				//out << "COMMA ,\n";
-			}
-		} while (sym == "COMMA");
-	}
-	else if (sym == "CHARTK") {
-		return_type item_return_type = CHAR;
-		//out << "CHARTK " << word << "\n";
-		do {
-			getsym();
-			string name = word;
-			transform(name.begin(), name.end(), name.begin(), ::tolower);
-			if (whether_redefine_name_when_use_IDENFR(name)) {
-				error_collect(REDEFINE_NAME_ERROR, line);
-			}
-			else {
-				push_sym_list(name, item_class_type, item_return_type, 0, line);
-			}
-			if (sym == "IDENFR") {
-				//out << "IDENFR " << word << "\n";
-				getsym();
-				if (sym == "ASSIGN") {
-					//out << "ASSIGN =\n";
-					getsym();
-				}
-				if (sym == "CHARCON") {
-					//out << "CHARCON " << word << "\n";
-					getsym();
-				}
-			}
-			if (sym == "COMMA") {
-				//out << "COMMA ,\n";
-			}
-		} while (sym == "COMMA");
-	}
-	//out << "<³£Á¿¶¨Òå>\n";
-}
-
-void compiler::integer() {
-	if (sym == "PLUS") {
-		//out << "PLUS +\n";
-		getsym();
-	}
-	else if (sym == "MINU") {
-		//out << "MINU -\n";
-		getsym();
-	}
-	non_sign_integer();
-	//out << "<ÕûÊı>\n";
-}
-
-void compiler::non_sign_integer() {
-	if (sym == "INTCON") {
-		//out << "INTCON " << word << "\n";
-		getsym();
-	}
-	//out << "<ÎŞ·ûºÅÕûÊı>\n";
-}
-
-void compiler::non_return() {
-
-	bool whether_add_func = false;
-
-	//out << "VOIDTK " << word << "\n";
-	class_type item_class_type = FUNC;
-	return_type item_return_type = VOID;
-	string name;
-	getsym();
-	if (sym == "IDENFR") {
-		//out << "IDENFR " << word << "\n";
-		name = word;
-		transform(name.begin(), name.end(), name.begin(), ::tolower);
-		getsym();
-		if (sym == "LPARENT") {
-			//out << "LPARENT (\n";
-			getsym();
-		}
-
-		if (whether_redefine_name_when_use_FUNC(name)) {
-			whether_add_func = false;
-			error_collect(REDEFINE_NAME_ERROR, line);
-			int para_num = 0;
-			paratable(&para_num, -1);
-		}
-		else {
-			whether_add_func = true;
-			int this_func_symbol_num = symbol_num;
-			push_sym_list(name, item_class_type, item_return_type, 0, line);
-			int para_num = 0;
-			paratable(&para_num, this_func_symbol_num);
-			(*(symbol_list[this_func_symbol_num])).para_num = para_num;
-		}
-
-		if (sym == "RPARENT") {
-			//out << "RPARENT )\n";
-			getsym();
-		}
-		else {
-			error_collect(RPARENT_ERROR, last_word_line);
-		}
-		if (sym == "LBRACE") {
-			//out << "LBRACE {\n";
-			getsym();
-		}
-
-		now_func_return_type_expected = VOID;
-		counpund();
-
-		if (sym == "RBRACE") {
-			//out << "RBRACE }\n";
-			getsym();
-		}
-
-		if (!whether_add_func) {
-			symbol_num = last_func;
-			last_func = 0;
-		}
-		else {
-			pop_sym_list();
-		}
-	}
-	//out << "<ÎŞ·µ»ØÖµº¯Êı¶¨Òå>\n";
-}
-
-void compiler::have_return(string name, class_type item_class_type, return_type item_return_type) {
-
-	bool whether_add_func = false;
-
-	if (whether_redefine_name_when_use_FUNC(name)) {
-		whether_add_func = false;
-		error_collect(REDEFINE_NAME_ERROR, line);
-		int para_num = 0;
-		paratable(&para_num, -1);
-	}
-	else {
-		whether_add_func = true;
-		int this_func_symbol_num = symbol_num;
-		push_sym_list(name, item_class_type, item_return_type, 0, line);	///////////////////////////////////////////////
-		int para_num = 0;
-		paratable(&para_num, this_func_symbol_num);
-		(*(symbol_list[this_func_symbol_num])).para_num = para_num;
-	}
-
-	now_func_return_type_expected = item_return_type;
-
-	if (sym == "RPARENT") {
-		//out << "RPARENT )\n";
-		getsym();
-	have_return1:
-		if (sym == "LBRACE") {
-			//out << "LBRACE {\n";
-			getsym();
-
-			now_func_return_type = NOTHING;
-			counpund();
-			if (now_func_return_type == NOTHING) {
-				error_collect(HAVE_RETURN_FUNC_ERROR, line);
-			}
-
-			if (sym == "RBRACE") {
-				//out << "RBRACE }\n";
-				getsym();
-			}
-		}
-	}
-	else {
-		error_collect(RPARENT_ERROR, last_word_line);
-		goto have_return1;
-	}
-
-	if (!whether_add_func) {
-		symbol_num = last_func;
-		last_func = 0;
-	}
-	else {
-		pop_sym_list();
-	}
-	//out << "<ÓĞ·µ»ØÖµº¯Êı¶¨Òå>\n";
-}
-
-void compiler::paratable(int* para_num, int this_func_symbol_num) {
-	para(para_num, this_func_symbol_num);
-	while (sym == "COMMA") {
-		//out << "COMMA ,\n";
-		getsym();
-		para(para_num, this_func_symbol_num);
-	}
-	//out << "<²ÎÊı±í>\n";
-}
-
-void compiler::para(int* para_num, int this_func_symbol_num) {
-	class_type item_class_type = PARA;
-	return_type item_return_type = NOTHING;
-	string name;
-	if (sym == "INTTK") {
-		//out << "INTTK " << word << "\n";
-		item_return_type = INT;
-		(*symbol_list[this_func_symbol_num]).para_list[*para_num] = INT;
-		*para_num = *para_num + 1;
-		getsym();
-	}
-	else if (sym == "CHARTK") {
-		//out << "CHARTK " << word << "\n";
-		item_return_type = CHAR;
-		(*symbol_list[this_func_symbol_num]).para_list[*para_num] = CHAR;
-		*para_num = *para_num + 1;
-		getsym();
-	}
-	if (sym == "IDENFR") {
-		//out << "IDENFR " << word << "\n";
-		name = word;
-		transform(name.begin(), name.end(), name.begin(), ::tolower);
-		if (whether_redefine_name_when_use_IDENFR(name)) {
-			error_collect(REDEFINE_NAME_ERROR, line);
-		}
-		else {
-			push_sym_list(name, item_class_type, item_return_type, 0, line);
-		}
-		getsym();
-	}
-}
-
-void compiler::counpund() {
-	if (sym == "CONSTTK") {
-		//out << "CONSTTK " << word << "\n";
-		const_discription();
-	}
-	if (sym == "INTTK" || sym == "CHARTK") {
-		var_discription();
-	}
-	statements();
-	//out << "<¸´ºÏÓï¾ä>\n";
-}
-
-void compiler::statements() {
-	while (sym == "WHILETK" || sym == "FORTK" || sym == "IFTK" || sym == "IDENFR"
-		|| sym == "SCANFTK" || sym == "PRINTFTK" || sym == "SWITCHTK"
-		|| sym == "SEMICN" || sym == "RETURNTK" || sym == "LBRACE") {
-		statement();
-	}
-	//out << "<Óï¾äÁĞ>\n";
-}
-
-void compiler::statement() {					// switch
-	if (sym == "WHILETK") {
-		loop_state();
-	}
-	else if (sym == "FORTK") {
-		loop_state();
-	}
-	else if (sym == "IFTK") {
-		if_state();
-	}
-	else if (sym == "IDENFR") {
-		bool whether_return = false;
-		//out << "IDENFR " << word << "\n";
-		string name = word;
-		transform(name.begin(), name.end(), name.begin(), ::tolower);
-		if (!whether_undefine_name(name)) {
-			error_collect(UNDEFIEN_NAME_ERROR, line);
-		}
-		if (find(have_return_func.begin(), have_return_func.end(), word) != have_return_func.end()) {
-			whether_return = true;
-		}
-		getsym();
-		if (sym == "LPARENT") {
-			//out << "LPARENT (\n";
-			getsym();
-			if (sym == "SEMICN" || sym == "COMMA") {	// ÀıÈç c(;;;;; µÄÉµ±Æ´í
-				error_collect(RPARENT_ERROR, last_word_line);
-			}
-			else {
-				value_para(name);
-				if (sym == "RPARENT") {
-					//out << "RPARENT )\n";
-					getsym();
-				statement1:
-					if (whether_return) {
-						//have_return_use();		////////////////////////////////////////////////////////
-						//out << "<ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä>\n";
-					}
-					else {
-						//non_return_use();		/////////////////////////////////////////////////////////
-						//out << "<ÎŞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä>\n";
-					}
-				}
-				else {
-					error_collect(RPARENT_ERROR, last_word_line);
-					goto statement1;
-				}
-				if (sym == "SEMICN") {
-					//out << "SEMICN ;\n";
-					getsym();
-				}
-				else {
-					error_collect(SEMICN_ERROR, last_word_line);
-				}
-			}
-		}
-		else if (sym == "ASSIGN" || sym == "LBRACK") {
-			for (int i = 0; i < symbol_num; i++) {
-				if ((*(symbol_list[i])).name == name) {
-					if ((*(symbol_list[i])).item_class_type == CONST) {
-						error_collect(CONST_VALUE_CHANGE_ERROR, line);
-						break;
-					}
-				}
-			}
-			assign_state();
-		}
-
-		else if (sym == "SEMICN") {
-			//out << "SEMICN ;\n";
-			getsym();
-		}
-		else {											//////////////////////////
-			error_collect(SEMICN_ERROR, last_word_line);
-		}
-
-
-
-	}
-	else if (sym == "SCANFTK") {
-		scanf_state();
-		if (sym == "SEMICN") {
-			//out << "SEMICN ;\n";
-			getsym();
-		}
-		else {
-			error_collect(SEMICN_ERROR, last_word_line);
-		}
-	}
-	else if (sym == "PRINTFTK") {
-		printf_state();
-		if (sym == "SEMICN") {
-			//out << "SEMICN ;\n";
-			getsym();
-		}
-		else {
-			error_collect(SEMICN_ERROR, last_word_line);
-		}
-	}
-	else if (sym == "SWITCHTK") {
-		switch_state();
-	}
-	else if (sym == "SEMICN") {
-		//out << "SEMICN ;\n";
-		getsym();
-
-	}
-	else if (sym == "RETURNTK") {
-		return_state();
-		if (sym == "SEMICN") {
-			//out << "SEMICN ;\n";
-			getsym();
-		}
-		else {
-			error_collect(SEMICN_ERROR, last_word_line);
-		}
-	}
-	else if (sym == "LBRACE") {
-		//out << "LBRACE {\n";
-		getsym();
-		statements();
-		if (sym == "RBRACE") {
-			//out << "RBRACE }\n";
-			getsym();
-		}
-	}
-	else {
-		error_collect(SEMICN_ERROR, last_word_line);	/////////////////////////////////
-	}
-	//out << "<Óï¾ä>\n";
-}
-
-void compiler::assign_state() {
-	if (sym == "ASSIGN") {
-		//out << "ASSIGN =\n";
-		getsym();
-		return_type item_return_type = NOTHING;
-		expression(&item_return_type);
-	}
-	else if (sym == "LBRACK") {
-		//out << "LBRACK [\n";
-		getsym();
-		return_type item_return_type = NOTHING;
-		expression(&item_return_type);
-		if (item_return_type != INT) {
-			error_collect(ARRAY_INDEX_INTEGER_ERROR, line);
-		}
-		if (sym == "RBRACK") {
-			//out << "RBRACK ]\n";
-			getsym();
-		assign_state1:
-			if (sym == "ASSIGN") {
-				//out << "ASSIGN =\n";
-				getsym();
-				return_type item_return_type = NOTHING;
-				expression(&item_return_type);
-			}
-			if (sym == "LBRACK") {
-				//out << "LBRACK [\n";
-				getsym();
-				return_type item_return_type = NOTHING;
-				expression(&item_return_type);
-				if (item_return_type != INT) {
-					error_collect(ARRAY_INDEX_INTEGER_ERROR, line);
-				}
-				if (sym == "RBRACK") {
-					//out << "RBRACK ]\n";
-					getsym();
-				assign_state2:
-					if (sym == "ASSIGN") {
-						//out << "ASSIGN =\n";
-						getsym();
-						return_type item_return_type = NOTHING;
-						expression(&item_return_type);
-					}
-				}
-				else {
-					error_collect(RBRACK_ERROR, last_word_line);
-					goto assign_state2;
-				}
-			}
-		}
-		else {
-			error_collect(RBRACK_ERROR, last_word_line);
-			goto assign_state1;
-		}
-
-
-	}
-	//out << "<¸³ÖµÓï¾ä>\n";
-	if (sym == "SEMICN") {
-		//out << "SEMICN ;\n";
-		getsym();
-	}
-	else {
-		error_collect(SEMICN_ERROR, last_word_line);
-	}
-
-}
-
-
-void compiler::return_state() {
-	if (sym == "RETURNTK") {
-		//out << "RETURNTK " << word << "\n";
-		getsym();
-	}
-	if (sym == "LPARENT") {
-		if (now_func_return_type_expected == VOID) {
-			error_collect(NON_RETURN_FUNC_ERROR, line);
-		}
-		//out << "LPARENT (\n";
-		getsym();
-		if (sym != "RPARENT") {
-			return_type item_return_type = NOTHING;
-			expression(&item_return_type);
-			now_func_return_type = item_return_type;
-		}
-		else {
-			now_func_return_type = NOTHING;
-		}
-		if ((now_func_return_type_expected != now_func_return_type)&& (now_func_return_type_expected == INT || now_func_return_type_expected == CHAR)) {
-			error_collect(HAVE_RETURN_FUNC_ERROR, line);
-			now_func_return_type = HAVE_ERROR_COLLECT;
-		}
-		if (sym == "RPARENT") {
-			//out << "RPARENT )\n";
-			getsym();
-		}
-		else {
-			error_collect(RPARENT_ERROR, last_word_line);
-		}
-	}
-	else {
-		if (now_func_return_type_expected == INT || now_func_return_type_expected == CHAR) {
-			error_collect(HAVE_RETURN_FUNC_ERROR, line);
-			now_func_return_type = HAVE_ERROR_COLLECT;
-		}
-	}
-	//out << "<·µ»ØÓï¾ä>\n";
-}
-
-void compiler::switch_state() {
-	//out << "SWITCHTK " << word << "\n";
-	getsym();
-	if (sym == "LPARENT") {
-		//out << "LPARENT (\n";
-		getsym();
-		return_type item_return_type = NOTHING;
-		expression(&item_return_type);
-		if (sym == "RPARENT") {
-			//out << "RPARENT )\n";
-			getsym();
-		}
-		else {
-			error_collect(RPARENT_ERROR, last_word_line);
-		}
-
-		if (sym == "LBRACE") {
-			//out << "LBRACE {\n";
-			getsym();
-			case_table(item_return_type);
-			default_table();
-		}
-		if (sym == "RBRACE") {
-			//out << "RBRACE }\n";
-			getsym();
-		}
-	}
-
-	//out << "<Çé¿öÓï¾ä>\n";
-}
-
-void compiler::default_table() {
-	if (sym == "DEFAULTTK") {
-		//out << "DEFAULTTK " << word << "\n";
-		getsym();
-	}
-	else {
-		error_collect(DEFAULT_DISMISS_ERROR, line);
-		goto default_table1;
-	}
-	if (sym == "COLON") {
-		//out << "COLON :\n";
-		getsym();
-	}
-	statement();
-	//out << "<È±Ê¡>\n";
-default_table1:
-	;
-}
-
-void compiler::case_table(return_type item_return_type) {
-	while (sym == "CASETK") {
-		case_substate(item_return_type);
-	}
-	//out << "<Çé¿ö±í>\n";
-}
-
-void compiler::case_substate(return_type item_return_type) {
-	if (sym == "CASETK") {
-		//out << "CASETK " << word << "\n";
-		getsym();
-		if (item_return_type != constant()) {
-			error_collect(CONST_VALUE_TYPE_ERROR, line);
-		}
-		if (sym == "COLON") {
-			//out << "COLON :\n";
-			getsym();
-			statement();
-		}
-	}
-	//out << "<Çé¿ö×ÓÓï¾ä>\n";
-}
-
-return_type compiler::constant() {
-	if (sym == "CHARCON") {
-		//out << "CHARCON " << word << "\n";
-		getsym();
-		return CHAR;
-	}
-	else {
-		integer();
-		return INT;
-	}
-	//out << "<³£Á¿>\n";
-}
-
-void compiler::printf_state() {
-	//out << "PRINTFTK " << word << "\n";
-	getsym();
-	if (sym == "LPARENT") {
-		//out << "LPARENT (\n";
-		getsym();
-		if (sym == "STRCON") {
-			//out << "STRCON " << word << "\n";
-			string_();
-			if (sym == "COMMA") {
-				//out << "COMMA ,\n";
-				getsym();
-				return_type item_return_type = NOTHING;
-				expression(&item_return_type);
-			}
-		}
-		else {
-			return_type item_return_type = NOTHING;
-			expression(&item_return_type);
-		}
-	}
-	if (sym == "RPARENT") {
-		//out << "RPARENT )\n";
-		getsym();
-	}
-	else {
-		error_collect(RPARENT_ERROR, last_word_line);
-	}
-	//out << "<Ğ´Óï¾ä>\n";
-}
-
-void compiler::string_() {
-	//out << "<×Ö·û´®>\n";
-	getsym();
-}
-
-void compiler::scanf_state() {
-	//out << "SCANFTK " << word << "\n";
-	getsym();
-	if (sym == "LPARENT") {
-		//out << "LPARENT (\n";
-		getsym();
-		if (sym == "IDENFR") {
-			//out << "IDENFR " << word << "\n";
-			string name = word;
-			transform(name.begin(), name.end(), name.begin(), ::tolower);
-			if (!whether_undefine_name(name)) {
-				error_collect(UNDEFIEN_NAME_ERROR, line);
-			}
-			for (int i = symbol_num - 1; i >= 0; i--) {
-				if ((*(symbol_list[i])).name == name) {
-					if ((*(symbol_list[i])).item_class_type == CONST) {
-						error_collect(CONST_VALUE_CHANGE_ERROR, line);
-						break;
-					}
-				}
-			}
-			getsym();
-			if (sym == "RPARENT") {
-				//out << "RPARENT )\n";
-				getsym();
-			}
-			else {
-				error_collect(RPARENT_ERROR, last_word_line);
-			}
-		}
-	}
-	//out << "<¶ÁÓï¾ä>\n";
-}
-
-void compiler::if_state() {
-	//out << "IFTK " << word << "\n";
-	getsym();
-	if (sym == "LPARENT") {
-		//out << "LPARENT (\n";
-		getsym();
-		condition();
-		if (sym == "RPARENT") {
-			//out << "RPARENT )\n";
-			getsym();
-		if_state1:
-			statement();
-			if (sym == "ELSETK") {
-				//out << "ELSETK " << word << "\n";
-				getsym();
-				statement();
-			}
-		}
-		else {
-			error_collect(RPARENT_ERROR, last_word_line);
-			goto if_state1;
-		}
-	}
-	//out << "<Ìõ¼şÓï¾ä>\n";
-}
-
-void compiler::loop_state() {
-	if (sym == "WHILETK") {
-		//out << "WHILETK " << word << "\n";
-		getsym();
-		if (sym == "LPARENT") {
-			//out << "LPARENT (\n";
-			getsym();
-			condition();
-			if (sym == "RPARENT") {
-				//out << "RPARENT )\n";
-				getsym();
-			loop_state1:
-				statement();
-			}
-			else {
-				error_collect(RPARENT_ERROR, last_word_line);
-				goto loop_state1;
-			}
-		}
-	}
-	else if (sym == "FORTK") {
-		//out << "FORTK " << word << "\n";
-		getsym();
-		if (sym == "LPARENT") {
-			//out << "LPARENT (\n";
-			getsym();
-			if (sym == "IDENFR") {
-				//out << "IDENFR " << word << "\n";
-				string name = word;
-				transform(name.begin(), name.end(), name.begin(), ::tolower);
-				if (!whether_undefine_name(name)) {
-					error_collect(UNDEFIEN_NAME_ERROR, line);
-				}
-				getsym();
-				if (sym == "ASSIGN") {
-					//out << "ASSIGN =\n";
-					getsym();
-					return_type item_return_type = NOTHING;
-					expression(&item_return_type);
-					if (sym == "SEMICN") {
-						//out << "SEMICN ;\n";
-						getsym();
-					FORK1:
-						condition();
-						if (sym == "SEMICN") {
-							//out << "SEMICN ;\n";
-							getsym();
-						FORK2:
-							if (sym == "IDENFR") {
-								//out << "IDENFR " << word << "\n";
-								string name = word;
-								transform(name.begin(), name.end(), name.begin(), ::tolower);
-								if (!whether_undefine_name(name)) {
-									error_collect(UNDEFIEN_NAME_ERROR, line);
-								}
-								getsym();
-								if (sym == "ASSIGN") {
-									//out << "ASSIGN =\n";
-									getsym();
-									if (sym == "IDENFR") {
-										//out << "IDENFR " << word << "\n";
-										string name = word;
-										transform(name.begin(), name.end(), name.begin(), ::tolower);
-										if (!whether_undefine_name(name)) {
-											error_collect(UNDEFIEN_NAME_ERROR, line);
-										}
-										getsym();
-										if (sym == "PLUS") {
-											//out << "PLUS +\n";
-											getsym();
-										}
-										if (sym == "MINU") {
-											//out << "MINU -\n";
-											getsym();
-										}
-										foodstep();
-										if (sym == "RPARENT") {
-											//out << "RPARENT )\n";
-											getsym();
-										}
-										else {
-											error_collect(RPARENT_ERROR, last_word_line);
-										}
-										statement();
-									}
-								}
-							}
-						}
-						else {
-							error_collect(SEMICN_ERROR, last_word_line);
-							goto FORK2;
-						}
-					}
-					else {
-						error_collect(SEMICN_ERROR, last_word_line);
-						goto FORK1;
-					}
-				}
-			}
-		}
-	}
-	//out << "<Ñ­»·Óï¾ä>\n";
-}
-
-void compiler::foodstep() {
-	non_sign_integer();
-	//out << "<²½³¤>\n";
-}
-
-void compiler::condition() {
-	return_type item_return_type = NOTHING;
-	expression(&item_return_type);
-	if (item_return_type != INT) {
-		error_collect(CONDITION_ERROR, line);
-	}
-	if (sym == "LSS") {
-		//out << "LSS <\n";
-		getsym();
-	}
-	else if (sym == "LEQ") {
-		//out << "LEQ <=\n";
-		getsym();
-	}
-	else if (sym == "GRE") {
-		//out << "GRE >\n";
-		getsym();
-	}
-	else if (sym == "GEQ") {
-		//out << "GEQ >=\n";
-		getsym();
-	}
-	else if (sym == "NEQ") {
-		//out << "NEQ !=\n";
-		getsym();
-	}
-	else if (sym == "EQL") {
-		//out << "EQL ==\n";
-		getsym();
-	}
-	item_return_type = NOTHING;
-	expression(&item_return_type);
-	if (item_return_type != INT) {
-		error_collect(CONDITION_ERROR, line);
-	}
-	//out << "<Ìõ¼ş>\n";
-}
-
-void compiler::expression(return_type* item_return_type) {
-	if (sym == "PLUS") {
-		//out << "PLUS +\n";
-		getsym();
-	}
-	else if (sym == "MINU") {
-		//out << "MINU -\n";
-		getsym();
-	}
-	term(item_return_type);
-	while (sym == "PLUS" || sym == "MINU") {
-		if (sym == "PLUS") {
-			//out << "PLUS +\n";
-			getsym();
-		}
-		else if (sym == "MINU") {
-			//out << "MINU -\n";
-			getsym();
-		}
-		term(item_return_type);
-		*item_return_type = INT;	// only one ×Ö·û£¬ÕûÊı£¬ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä
-	}
-	//out << "<±í´ïÊ½>\n";
-}
-
-void compiler::term(return_type* item_return_type) {
-	factor(item_return_type);
-	while (sym == "MULT" || sym == "DIV") {
-		if (sym == "MULT") {
-			//out << "MULT *\n";
-			getsym();
-		}
-		else if (sym == "DIV") {
-			//out << "DIV /\n";
-			getsym();
-		}
-		factor(item_return_type);
-		*item_return_type = INT;	// only one ×Ö·û£¬ÕûÊı£¬ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä
-	}
-	//out << "<Ïî>\n";
-}
-
-void compiler::factor(return_type* item_return_type) {
-	if (sym == "IDENFR") {
-		//out << "IDENFR " << word << "\n";
-		string name = word;
-		transform(name.begin(), name.end(), name.begin(), ::tolower);
-		if (!whether_undefine_name(name)) {
-			error_collect(UNDEFIEN_NAME_ERROR, line);
-			*item_return_type = NOTHING;
-		}
-		else {
-			if (get_return_type(name) == CHAR) {
-				*item_return_type = CHAR;	///////////////////////////////////////////////////////////////
-			}
-			else {
-				*item_return_type = INT;
-			}
-		}
-		getsym();
-		if (sym == "LBRACK") {
-			//out << "LBRACK [\n";
-			getsym();
-			return_type item_return_type = NOTHING;
-			expression(&item_return_type);
-			if (item_return_type != INT) {
-				error_collect(ARRAY_INDEX_INTEGER_ERROR, line);
-			}
-			if (sym == "RBRACK") {
-				//out << "RBRACK ]\n";
-				getsym();
-			factor1:
-				if (sym == "LBRACK") {
-					//out << "LBRACK [\n";
-					getsym();
-					return_type item_return_type = NOTHING;
-					expression(&item_return_type);
-					if (item_return_type != INT) {
-						error_collect(ARRAY_INDEX_INTEGER_ERROR, line);
-					}
-					if (sym == "RBRACK") {
-						//out << "RBRACK ]\n";
-						getsym();
-					}
-					else {
-						error_collect(RBRACK_ERROR, last_word_line);
-					}
-				}
-			}
-			else {
-				error_collect(RBRACK_ERROR, last_word_line);
-				goto factor1;
-			}
-		}
-		if (sym == "LPARENT") {
-			have_return_use(name);
-		}
-	}
-	else if (sym == "LPARENT") {
-		//out << "LPARENT (\n";
-		*item_return_type = INT;
-		getsym();
-		return_type item_return_type = NOTHING;
-		expression(&item_return_type);
-		if (sym == "RPARENT") {
-			//out << "RPARENT )\n";
-			getsym();
-		}
-		else {
-			error_collect(RPARENT_ERROR, last_word_line);
-		}
-	}
-	else if (sym == "MULT") {
-		//out << "MULT *\n";
-		*item_return_type = CHAR;
-		getsym();
-	}
-	else if (sym == "DIV") {
-		//out << "DIV /\n";
-		*item_return_type = CHAR;
-		getsym();
-	}
-	else if (sym == "CHARCON") {
-		//out << "CHARCON " << word << "\n";
-		*item_return_type = CHAR;
-		getsym();
-	}
-	else {
-		*item_return_type = INT;
-		integer();
-	}
-	//out << "<Òò×Ó>\n";
-}
-
-void compiler::have_return_use(string name) {
-	if (sym == "LPARENT") {
-		//out << "LPARENT (\n";
-		getsym();
-		if (sym == "SEMICN" || sym == "COMMA") {	// ÀıÈç c(;;;;; µÄÉµ±Æ´í
-			error_collect(RPARENT_ERROR, last_word_line);
-		}
-		else {
-			value_para(name);
-			if (sym == "RPARENT") {
-				//out << "RPARENT )\n";
-				getsym();
-			}
-			else {
-				error_collect(RPARENT_ERROR, last_word_line);
-			}
-		}
-	}
-	//out << "<ÓĞ·µ»ØÖµº¯Êıµ÷ÓÃÓï¾ä>\n";
-}
-
-void compiler::value_para(string name) {
-	whether_use_func_para_num_right = true;
-	whether_use_func_para_type_right = true;
-
-	int now_func_symbol_num = 0;
-	int now_func_para_num_expected = 0;
-	for (int i = 0; i < symbol_num; i++) {
-		if ((*symbol_list[i]).name == name) {
-			now_func_symbol_num = i;
-			now_func_para_num_expected = (*symbol_list[i]).para_num;
-			break;
-		}
-	}
-
-	int now_func_para_num = 0;
-
-	if (sym != "RPARENT") {
-		return_type item_return_type = NOTHING;
-		expression(&item_return_type);
-
-		if ((*symbol_list[now_func_symbol_num]).para_list[now_func_para_num] != item_return_type) {
-			whether_use_func_para_type_right = false;
-		}
-		now_func_para_num++;
-
-		while (sym == "COMMA") {
-			//out << "COMMA ,\n";
-			getsym();
-			return_type item_return_type = NOTHING;
-			expression(&item_return_type);
-			if ((*symbol_list[now_func_symbol_num]).para_list[now_func_para_num] != item_return_type) {
-				whether_use_func_para_type_right = false;
-			}
-			now_func_para_num++;
-		}
-		if (now_func_para_num_expected != now_func_para_num) {
-			whether_use_func_para_num_right = false;
-		}
-
-		if (!whether_use_func_para_num_right) {
-			error_collect(FUNC_PARA_NUM_ERROR, line);
-		}
-		if (whether_use_func_para_num_right && (!whether_use_func_para_type_right)) {
-			error_collect(FUNC_PARA_TYPE_ERROR, line);
-		}
-	}
-	else {		/////////////////// shit();
-		if (now_func_para_num_expected != 0) {
-			error_collect(FUNC_PARA_NUM_ERROR, line);
-		}
-	}
-	//out << "<Öµ²ÎÊı±í>\n";
-}
-
-void compiler::analysis_first_letter() {
-	if (sym == "INTTK") {
-		//out << "INTTK " << word << "\n";
-		sym2 = sym;
-		getsym();
-	}
-	else if (sym == "CHARTK") {
-		//out << "CHARTK " << word << "\n";
-		sym2 = sym;
-		getsym();
-	}
-	if (sym == "IDENFR") {
-		//out << "IDENFR " << word << "\n";
-		getsym();
-	}
-}
-*/
