@@ -30,21 +30,3 @@ typedef struct {
 
 
 }symbol;
-
-/*
-#pragma once
-#include "compiler.h"
-
-enum return_type { INT, CHAR, VOID, NOTHING, HAVE_ERROR_COLLECT };
-enum class_type { CONST, VAR, ARRAY, FUNC, PARA };
-
-typedef struct {
-	std::string name;
-	return_type item_return_type;	//
-	class_type item_class_type;	//
-	int para_num;
-	return_type para_list[10];
-	int line;
-
-}symbol;
-*/
