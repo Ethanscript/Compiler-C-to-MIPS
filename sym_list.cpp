@@ -9,7 +9,7 @@ symbol* compiler::push_sym_list(string name, class_type item_class_type, return_
 	new_symbol->item_class_type = item_class_type;
 	new_symbol->para_num = para_num;
 	new_symbol->line = line;
-	new_symbol->value = value;		//????????????????????????????/ÓĞÆäËûº¬Òå para_num ???
+	new_symbol->value = value;		//????????????????????????????/æœ‰å…¶ä»–å«ä¹‰ para_num ???
 	new_symbol->address = address;
 	new_symbol->reg = -1;
 	new_symbol->first_use = first_use;
@@ -64,7 +64,7 @@ symbol* compiler::find_sym_Global(string name) {
 void compiler::pop_sym_list() {
 	func_item_num[func_num] = symbol_num - last_func;
 	func_table[func_num] = new symbol * [500];
-	while (symbol_num > last_func) {	//¿ÉÄÜÓĞÎó
+	while (symbol_num > last_func) {	//å¯èƒ½æœ‰è¯¯
 		symbol_num--;
 		symbol* sym = symbol_list[symbol_num];
 		func_table[func_num][symbol_num - last_func] = sym;
@@ -73,7 +73,7 @@ void compiler::pop_sym_list() {
 	symbol_list[symbol_num - 1]->position = func_num;
 	address = globaladdress;
 
-	//symbol_num = last_func + 1; /////////////////////////////////////////±£Áôº¯ÊıÃû×Ö
+	//symbol_num = last_func + 1; /////////////////////////////////////////ä¿ç•™å‡½æ•°åå­—
 	last_func = 0;
 	func_num++;
 }
@@ -82,7 +82,7 @@ void compiler::enter_func() {
 	globaladdress = address;
 	last_func = symbol_num;
 	address = 0;
-	begin_func = symbol_num;	/////// ¶Áµôº¯ÊıÃû£¬ Îª¸Ãº¯ÊıÏÂµÄÍ¬Ò»×÷ÓÃÓòsymbolµÄÆğÊ¼Î»ÖÃ !!!!symbol_num ÊÇ¸öÊı£¬begin_func ÊÇÏÂ±ê£¬±¾Éí¾ÍÉÙ1
+	begin_func = symbol_num;	/////// è¯»æ‰å‡½æ•°åï¼Œ ä¸ºè¯¥å‡½æ•°ä¸‹çš„åŒä¸€ä½œç”¨åŸŸsymbolçš„èµ·å§‹ä½ç½® !!!!symbol_num æ˜¯ä¸ªæ•°ï¼Œbegin_func æ˜¯ä¸‹æ ‡ï¼Œæœ¬èº«å°±å°‘1
 }
 
 bool compiler::whether_redefine_name_when_use_IDENFR(string name) {
@@ -121,67 +121,3 @@ return_type compiler::get_return_type(string name) {
 	}
 	return NOTHING;
 }
-
-/*
-#include "compiler.h"
-#include "sym_list.h"
-
-symbol* compiler::push_sym_list(string name, class_type item_class_type, return_type item_return_type, int para_num, int line) {
-	symbol* new_symbol = new symbol();
-	transform(name.begin(), name.end(), name.begin(), ::tolower);
-	new_symbol->name = name;
-	new_symbol->item_return_type = item_return_type;
-	new_symbol->item_class_type = item_class_type;
-	new_symbol->para_num = para_num;
-	new_symbol->line = line;
-	symbol_list[symbol_num] = new_symbol;
-	symbol_num = symbol_num + 1;
-	return new_symbol;
-}
-
-void compiler::pop_sym_list() {
-	symbol_num = last_func + 1; /////////////////////////////////////////±£Áôº¯ÊıÃû×Ö
-	last_func = 0;
-}
-
-void compiler::enter_func() {
-	last_func = symbol_num;
-	begin_func = symbol_num;	/////// ¶Áµôº¯ÊıÃû£¬ Îª¸Ãº¯ÊıÏÂµÄÍ¬Ò»×÷ÓÃÓòsymbolµÄÆğÊ¼Î»ÖÃ !!!!symbol_num ÊÇ¸öÊı£¬begin_func ÊÇÏÂ±ê£¬±¾Éí¾ÍÉÙ1
-}
-
-bool compiler::whether_redefine_name_when_use_IDENFR(string name) {
-	for (int i = begin_func; i < symbol_num; i++) {
-		if ((*(symbol_list[i])).name == name) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool compiler::whether_undefine_name(string name) {
-	for (int i = 0; i < symbol_num; i++) {
-		if ((*(symbol_list[i])).name == name) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool compiler::whether_redefine_name_when_use_FUNC(string name) {
-	for (int i = 0; i < symbol_num; i++) {
-		if ((*(symbol_list[i])).name == name) {
-			return true;
-		}
-	}
-	return false;
-}
-
-
-return_type compiler::get_return_type(string name) {
-	for (int i = symbol_num - 1; i >= 0; i--) {
-		if ((*(symbol_list[i])).name == name) {
-			return (*(symbol_list[i])).item_return_type;
-		}
-	}
-}
-*/
