@@ -36,21 +36,3 @@ void compiler::start() {
 
 	this->mips_code_stream.close();
 }
-
-/*
-#include "compiler.h"
-
-compiler::compiler() {
-	this->in.open("testfile.txt", ios::in);
-	this->out.open("error.txt", ios::out);
-}
-
-void compiler::start() {
-	this->program();
-	this->error_output();
-	this->in.close();
-	this->out.close();
-}
-
-
-*/
